@@ -1,26 +1,36 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter } from 'react-router-dom'
+import Header from './components/Header'
+import { GlobalCss } from './styles'
+
+import Rotas from './routes'
+import Footer from './components/Footer'
+import EmailCaptureSection from './components/EmailCaptureSection'
+import ScrollToTop from './auxliares/scrollToTop'
+
+export type Game = {
+  id: number
+  titulo: string
+  plataformas: string[]
+  precoAntigo: number
+  preco: number
+  categoria: string
+  imagem: string
+}
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <BrowserRouter>
+      {/* ScrolToTop faz com que a posição anterior do scroll seja perdida ao trocar para nova página */}
+      <ScrollToTop />
+      <GlobalCss />
+      <div className="container">
+        <Header />
+      </div>
+      <Rotas />
+      <EmailCaptureSection />
+      <Footer />
+    </BrowserRouter>
+  )
 }
 
-export default App;
+export default App
