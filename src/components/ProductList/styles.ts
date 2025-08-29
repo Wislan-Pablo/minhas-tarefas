@@ -10,7 +10,7 @@ export const Titulo = styled.h2`
 
 export const Container = styled.section<Omit<Props, 'title' | 'games'>>`
   width: 100%;
-  padding: 24px 0;
+  padding: 4px 0;
   background-color: ${(props) =>
     props.background === 'gray'
       ? Cores.cinza

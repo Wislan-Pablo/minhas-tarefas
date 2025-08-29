@@ -7,6 +7,7 @@ import CategoriaRPG from './pages/categorias/CategoriaRPG'
 import CategoriaEsportes from './pages/categorias/CategoriaEsportes'
 import Novidades from './pages/Novidades'
 import Promocoes from './pages/Promocoes'
+import ProductDetails from './components/Product/ProductDetails'
 
 const Rotas = () => (
   <Routes>
@@ -17,6 +18,7 @@ const Rotas = () => (
     <Route path="/categorias/esportes" element={<CategoriaEsportes />} />
     <Route path="/novidades" element={<Novidades />} />
     <Route path="/promocoes" element={<Promocoes />} />
+    <Route path="/product-details/:id" element={<ProductDetails />} />
     <Route path="/checkout" element={<Carrinho />} />
   </Routes>
 )

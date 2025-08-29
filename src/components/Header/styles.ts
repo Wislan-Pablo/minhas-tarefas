@@ -1,4 +1,4 @@
-import styled, { keyframes } from 'styled-components'
+import styled, { css, keyframes } from 'styled-components'
 import { Cores } from '../../styles'
 import { ButtonLink } from '../Button/styles'
 
@@ -47,10 +47,26 @@ export const Links = styled.ul`
   margin-left: 24px;
 `
 
-export const Title = styled.li`
+interface TitleProps {
+  active?: boolean
+}
+
+export const Title = styled.li<TitleProps>`
   margin-right: 4px;
   padding: 8px 12px;
   border: 2px solid transparent;
+
+  &:hover {
+    text-decoration: underline;
+  }
+
+  ${({ active }) =>
+    active &&
+    css`
+      a {
+        font-weight: bold;
+      }
+    `}
 `
 
 export const DropdownContainer = styled.div`
@@ -61,7 +77,7 @@ export const TitleDropdown = styled.div`
   position: relative;
   cursor: pointer;
   margin-right: 4px;
-  padding: 8px 12px;
+  padding: 6px 12px;
   border: 2px solid transparent;
   width: fit-content;
 
@@ -80,7 +96,7 @@ export const TitleDropdown = styled.div`
 
 export const DropdownMenu = styled.ul`
   position: absolute;
-  top: 90%;
+  top: 88%;
   left: 0;
   background-color: ${Cores.azul};
   border: 2px solid ${Cores.branco};
@@ -91,13 +107,19 @@ export const DropdownMenu = styled.ul`
   z-index: 1000;
   width: calc(100% - 4px);
 
+  /* Estado inicial: invisível e sem interações */
   opacity: 0;
   transform: translateY(-10px);
+  pointer-events: none;
+
+  /* Transições suaves de opacidade e posição */
   transition: opacity 0.3s ease, transform 0.3s ease;
 
   &.active {
+    /* Quando ativo: visível e interativo */
     opacity: 1;
     transform: translateY(0);
+    pointer-events: auto;
   }
 `
 
@@ -108,11 +130,11 @@ export const DropdownItem = styled.li`
   a {
     display: block;
     height: 100%;
-    padding: 8px 16px;
+    padding: 6px 16px;
     text-decoration: none;
     color: ${Cores.branco};
     font-weight: semi-bold;
-    transition: color 0.3s ease, background-color 0.3s ease;
+    transition: color 0.2s ease, background-color 0.2s ease;
   }
 
   a:hover {
@@ -140,9 +162,17 @@ export const BtnSearch = styled.div`
     }
   }
 `
+export const LinkCart = styled.div`
+  &:hover {
+    cursor: pointer;
+  }
+`
 
 export const ContainerCart = styled.div`
-  padding: 8px 16px;
+  padding: 8px;
+  width: 48px;
+  height: auto;
+  position: relative;
   background-color: ${Cores.azul};
   border-radius: 8px;
   background-image: linear-gradient(45deg, ${Cores.azul}, ${Cores.verde});
@@ -154,6 +184,29 @@ export const ContainerCart = styled.div`
     background-position: right;
     transform: scale(1.03);
     transition: transform 0.3s ease-in-out;
+  }
+
+  .NumberBasket {
+    position: absolute;
+    top: 3px; /* sobe a bolinha */
+    right: 5px; /* desloca levemente para a esquerda */
+    background-color: ${Cores.branco};
+    color: ${Cores.azul};
+    border-radius: 50%;
+    width: 16px;
+    height: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+    font-weight: bold;
+    z-index: 1000;
+  }
+
+  .NumberBasket strong {
+    font-size: 12px;
+    color: ${Cores.azul};
+    margin: 0; /* remove o margin-left do strong padrão */
   }
 `
 
@@ -167,22 +220,12 @@ export const ContainerUserLogin = styled.div`
     text-decoration: underline;
   }
 `
-
-export const LinkCart = styled.div`
-  display: flex;
-  align-items: center;
-
-  strong {
-    font-size: 16px;
-    margin-left: 6px;
-  }
-
-  &:hover {
-    cursor: pointer;
-  }
-`
 // *** Bloco do campo de busca ***
 export const ContainerSearch = styled.div`
+  position: absolute;
+  top: 108px; /* altura do HeaderBar fixo */
+  left: 0;
+  z-index: 999;
   width: 100%;
   display: flex;
   align-items: center;
@@ -191,17 +234,17 @@ export const ContainerSearch = styled.div`
   background: transparent;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   opacity: 0;
-  transition: opacity 0.3s ease;
+  transition: opacity 0.4s ease-in-out;
 
   input {
     flex: 1;
-    max-width: 600px;
+    max-width: 400px;
     padding: 8px;
     font-size: 18px;
     border-radius: 8px;
     color: ${Cores.branco};
     border: 2px solid white;
-    background: rgba(6, 90, 96, 0.8);
+    background: rgba(6, 90, 96, 0.9);
 
     /* Placeholder branco */
     &::placeholder {
@@ -235,11 +278,12 @@ export const ContainerSearch = styled.div`
     border: 2px solid white;
     background: rgba(6, 90, 96, 0.8);
     cursor: pointer;
+    margin-left: 16px;
   }
 
   &.fixed {
     position: fixed;
-    top: 70px; /* altura do HeaderBar fixo */
+    top: 74px; /* altura do HeaderBar fixo */
     left: 0;
     z-index: 999;
   }
@@ -260,137 +304,4 @@ export const SidebarOverlay = styled.div<{ open: boolean }>`
   visibility: ${({ open }) => (open ? 'visible' : 'hidden')};
   transition: opacity 0.3s ease, visibility 0.3s ease;
   z-index: 999;
-`
-
-export const Sidebar = styled.div<{ open: boolean }>`
-  position: fixed;
-  top: 0;
-  right: 0;
-  width: 380px;
-  height: 100vh;
-  background: ${Cores.azul};
-  color: ${Cores.branco};
-  box-shadow: -2px 0 8px rgba(0, 0, 0, 0.3);
-  transform: ${({ open }) => (open ? 'translateX(0)' : 'translateX(100%)')};
-  transition: transform 0.3s ease;
-  z-index: 1000;
-  display: flex;
-  flex-direction: column;
-`
-
-export const ContainerRetornar = styled.div`
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-
-  &:hover {
-    text-decoration: underline;
-  }
-
-  div {
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-    margin: 8px 0 16px 24px;
-  }
-
-  svg {
-    width: 32px;
-    height: 32px;
-    margin-right: 8px;
-  }
-`
-
-const fadeOut = keyframes`
-  0% { opacity: 1; }
-  80% { opacity: 1; }
-  100% { opacity: 0; }
-`
-
-export const ContainerProductCart = styled.div`
-  display: flex;
-  align-items: center;
-  border-radius: 6px;
-  padding-top: 2px;
-  border: 1px solid ${Cores.branco};
-  margin-bottom: 12px;
-  text-decoration: none;
-
-  button {
-    padding: 0 4px;
-    cursor: pointer;
-    background-color: transparent;
-    border: none;
-  }
-
-  .removed-message {
-    color: ${Cores.branco};
-    font-weight: bold;
-    animation: ${fadeOut} 2s forwards;
-  }
-
-  svg {
-    width: 28px;
-    height: 28px;
-    transition: fill 0.4s ease, stroke 0.3s ease;
-
-    &:hover {
-      fill: ${Cores.branco};
-      stroke: ${Cores.azul};
-    }
-  }
-`
-
-export const BtnEsvaziarCesta = styled.div`
-  a {
-    font-size: 16px;
-
-    &:hover {
-      text-decoration: underline;
-      cursor: pointer;
-    }
-  }
-`
-
-export const SidebarContent = styled.div`
-  padding: 24px;
-
-  h2 {
-    margin-bottom: 16px;
-  }
-
-  p {
-    text-align: left;
-  }
-
-  ul {
-    list-style: none;
-    padding: 0;
-    margin-bottom: 16px;
-  }
-
-  strong {
-    font-size: 18px;
-    margin-top: 16px;
-    margin-bottom: 24px;
-    display: block;
-  }
-
-  ${ButtonLink} {
-    max-width: 200px;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-top: 16px;
-
-    &:hover {
-      transform: scale(1.03);
-    }
-
-    svg {
-      width: 32px;
-      height: 32px;
-    }
-  }
 `

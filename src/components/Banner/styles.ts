@@ -20,6 +20,7 @@ export const Imagem = styled.div`
 
   ${TagContainer} {
     position: absolute;
+    border-radius: 8px;
     top: 32px;
   }
 `

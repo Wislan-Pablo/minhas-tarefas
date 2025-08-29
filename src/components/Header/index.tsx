@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
-import { remover, esvaziar } from '../../store/reducers/carrinho'
+import { Link, useLocation } from 'react-router-dom'
+import { remover } from '../../store/reducers/carrinho'
 import {
   HeaderBar,
   LinkCart,
@@ -12,43 +12,26 @@ import {
   DropdownItem,
   TitleDropdown,
   ContainerCart,
-  Sidebar,
   SidebarOverlay,
-  SidebarContent,
-  ContainerRetornar,
-  ContainerProductCart,
   ContainerUserLogin,
   ContainerMenuRight,
   BtnSearch,
-  BtnEsvaziarCesta,
   ContainerSearch
 } from './styles'
 import logo from '../../assets/images/logo2.svg'
 import { RootReducer } from '../../store'
-
-import { paraReal } from '../Product'
-import Button from '../Button'
-
-type RemovedPlaceholder = {
-  id: number
-  position: number // posição visual na <ul> no momento da remoção
-  height: number // altura medida para manter o layout
-}
+import { SideBarCart } from './SlideBarCart'
 
 const Header = () => {
   const dispatch = useDispatch()
   const [showCategories, setShowCategories] = useState(false)
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [isFixed, setIsFixed] = useState(false)
-  const [clearedMessage, setClearedMessage] = useState(false)
 
   // Mensagens/espaçadores para itens removidos
   const [removedPlaceholders, setRemovedPlaceholders] = useState<
-    RemovedPlaceholder[]
+    { id: number; position: number; height: number }[]
   >([])
-
-  // Refs dos nós de cada item para medir altura e posição visual
-  const itemRefs = useRef<Map<number, HTMLDivElement | null>>(new Map())
 
   // estado do campo de busca
   const [showSearch, setShowSearch] = useState(false)
@@ -65,7 +48,6 @@ const Header = () => {
 
   useEffect(() => {
     if (showSearch) {
-      // espera o elemento montar e aplica a classe para disparar a animação
       setTimeout(() => setSearchVisible(true), 10)
     } else {
       setSearchVisible(false)
@@ -87,39 +69,24 @@ const Header = () => {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  // Remove item e cria placeholder na MESMA posição visual
+  // Remove item e cria placeholder
   const handleRemoveItem = (id: number) => {
-    const node = itemRefs.current.get(id)
-    let position = 0
-    let height = 0
+    // Encontra a posição do item na lista visual
+    const position = itens.findIndex((item) => item.id === id)
+    const item = itens.find((item) => item.id === id)
 
-    if (node) {
-      const parent = node.parentElement
-      if (parent) {
-        const children = Array.from(parent.children)
-        position = children.indexOf(node) // posição visual atual na <ul>
-      }
-      height = node.getBoundingClientRect().height // altura do item
-    }
+    let height = 48 // altura padrão
 
     // Remove do Redux
     dispatch(remover(id))
 
-    // Insere placeholder para manter o espaço e exibir a mensagem
+    // Insere placeholder para manter o espaço
     setRemovedPlaceholders((prev) => [...prev, { id, position, height }])
 
     // Remove placeholder após 2s
     setTimeout(() => {
       setRemovedPlaceholders((prev) => prev.filter((p) => p.id !== id))
     }, 2000)
-  }
-
-  const handleClearAll = () => {
-    dispatch(esvaziar())
-    setClearedMessage(true)
-
-    // some a mensagem após 2s
-    setTimeout(() => setClearedMessage(false), 2000)
   }
 
   // Monta uma lista "virtual" que intercala placeholders e itens
@@ -129,7 +96,7 @@ const Header = () => {
   )
 
   const rows: Array<
-    | { type: 'placeholder'; data: RemovedPlaceholder }
+    | { type: 'placeholder'; data: { id: number; height: number } }
     | { type: 'item'; data: (typeof itens)[number] }
   > = []
 
@@ -137,7 +104,7 @@ const Header = () => {
   for (let pos = 0; pos < totalRows; pos++) {
     const ph = placeholdersSorted.find((p) => p.position === pos)
     if (ph) {
-      rows.push({ type: 'placeholder', data: ph })
+      rows.push({ type: 'placeholder', data: { id: ph.id, height: ph.height } })
     } else {
       const item = itens[itemIdx++]
       if (item) {
@@ -150,6 +117,9 @@ const Header = () => {
     setShowSearch((prev) => !prev)
   }
 
+  const location = useLocation()
+  const currentPath = location.pathname
+
   return (
     <>
       <HeaderBar className={isFixed ? 'fixed' : ''}>
@@ -159,7 +129,7 @@ const Header = () => {
           </Link>
           <nav>
             <Links>
-              <Title>
+              <Title active={currentPath === '/'}>
                 <Link to="/">Home</Link>
               </Title>
               <DropdownContainer
@@ -193,10 +163,10 @@ const Header = () => {
                   </DropdownItem>
                 </DropdownMenu>
               </DropdownContainer>
-              <Title>
+              <Title active={currentPath === '/novidades'}>
                 <Link to="/novidades">Novidades</Link>
               </Title>
-              <Title>
+              <Title active={currentPath === '/promocoes'}>
                 <Link to="/promocoes">Promoções</Link>
               </Title>
             </Links>
@@ -244,8 +214,8 @@ const Header = () => {
             <ContainerCart>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                width="18"
-                height="18"
+                width="20"
+                height="20"
                 fill="currentColor"
                 viewBox="0 0 16 16"
               >
@@ -253,9 +223,13 @@ const Header = () => {
               </svg>
               <span>
                 {itens.length > 0 ? (
-                  <strong>{itens.length}</strong>
+                  <div className="NumberBasket">
+                    <strong>{itens.length}</strong>
+                  </div>
                 ) : (
-                  <strong>0</strong>
+                  <div className="NumberBasket">
+                    <strong>{itens.length}</strong>
+                  </div>
                 )}
               </span>
             </ContainerCart>
@@ -278,128 +252,19 @@ const Header = () => {
         </ContainerSearch>
       )}
 
-      {/* Sidebar e overlay */}
+      {/* Sidebar e overlay - usando o componente SidebarCart */}
       <SidebarOverlay
         open={sidebarOpen}
         onClick={() => setSidebarOpen(false)}
       />
-      <Sidebar open={sidebarOpen}>
-        <ContainerRetornar onClick={() => setSidebarOpen(false)}>
-          <div>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth="1.5"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M6.75 15.75 3 12m0 0 3.75-3.75M3 12h18"
-              />
-            </svg>
-            <span>Retornar</span>
-          </div>
-        </ContainerRetornar>
-        <SidebarContent>
-          <h2>Sua Cesta de Produtos</h2>
 
-          {rows.length === 0 ? (
-            <p>
-              {' '}
-              A sua cesta está vazia. <br />
-              Adicione produtos para continuar.{' '}
-            </p>
-          ) : (
-            <>
-              <ul>
-                {rows.map((row) => {
-                  if (row.type === 'placeholder') {
-                    // Elemento FORA do ContainerProductCart, ocupando a mesma altura
-                    return (
-                      <div
-                        key={`placeholder-${row.data.id}`}
-                        style={{
-                          height: row.data.height || 48,
-                          display: 'flex',
-                          alignItems: 'center',
-                          marginBottom: 8 // mantenha igual ao ContainerProductCart
-                        }}
-                      >
-                        <span>Item removido com sucesso!</span>
-                      </div>
-                    )
-                  }
-
-                  const item = row.data
-                  return (
-                    <ContainerProductCart
-                      key={item.id}
-                      ref={(el) => {
-                        if (el) {
-                          itemRefs.current.set(item.id, el)
-                        } else {
-                          itemRefs.current.delete(item.id)
-                        }
-                      }}
-                    >
-                      <button
-                        type="button"
-                        onClick={() => handleRemoveItem(item.id)}
-                        aria-label={`Remover ${item.titulo}`}
-                      >
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          strokeWidth="1.5"
-                          stroke="white"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
-                          />
-                          <title>Remover Este Item</title>
-                        </svg>
-                      </button>
-                      <li>
-                        {item.titulo} - {paraReal(item.preco)}
-                      </li>
-                    </ContainerProductCart>
-                  )
-                })}
-              </ul>
-              <BtnEsvaziarCesta onClick={handleClearAll}>
-                <a title="Remove todos os items da cesta">Esvaziar Cesta</a>
-              </BtnEsvaziarCesta>
-            </>
-          )}
-
-          <strong>Total: {paraReal(valorTotal)}</strong>
-          {itens.length > 0 && (
-            <Link to="/checkout" onClick={() => setSidebarOpen(false)}>
-              <Button type="link" to="/checkout">
-                <span>Finalizar Compra</span>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth="1.5"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3"
-                  />
-                </svg>
-              </Button>
-            </Link>
-          )}
-        </SidebarContent>
-      </Sidebar>
+      <SideBarCart
+        sidebarOpen={sidebarOpen}
+        setSidebarOpen={setSidebarOpen}
+        rows={rows}
+        handleRemoveItem={handleRemoveItem}
+        valorTotal={valorTotal}
+      />
     </>
   )
 }

@@ -4,9 +4,29 @@ import { Cores } from '../../styles'
 export const Produto = styled.div`
   padding: 8px;
   border-radius: 8px;
+
+  .linkProduto {
+    transition: transform 0.2s ease;
+
+    &:hover {
+      cursor: pointer;
+      transform: scale(1.03);
+
+      a {
+        cursor: pointer;
+        text-decoration: underline;
+      }
+    }
+  }
 `
 
-export const Titulo = styled.h3``
+export const Titulo = styled.h3`
+  margin-bottom: 16px;
+
+  a {
+    color: ${Cores.branco};
+  }
+`
 
 export const Capa = styled.div`
   position: relative;
@@ -60,27 +80,39 @@ export const Plataformas = styled.ul`
     font-weight: bold;
   }
 `
+
 interface BtnProps {
   $adicionado?: boolean
 }
 
 export const BtnComprar = styled.button<BtnProps>`
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 100%;
-  background-color: ${Cores.azul};
   font-weight: bold;
   font-size: 16px;
-  padding: 12px 0;
-  text-transform: capitalize;
+  padding: 8px 12px;
   color: ${Cores.branco};
-  border: none;
-  cursor: pointer;
-  border-radius: 4px;
+  border: 2px solid transparent;
+  border-radius: 8px;
   background-color: ${(props) =>
     props.$adicionado ? Cores.verde : Cores.azul};
+  cursor: ${(props) => (props.$adicionado ? 'text' : 'pointer')};
   transition: background-color 0.3s ease, transform 0.3s ease;
 
   &:hover {
-    transform: scale(1.03);
+    border: 2px solid ${Cores.branco};
+    transform: scale(1.01);
+  }
+
+  &:disabled {
+    opacity: 0.8; /* opcional: dá uma aparência de desabilitado */
+    border: 2px solid ${Cores.branco};
+    transform: none; /* evita aplicar transform no hover */
+  }
+
+  svg {
+    margin-left: 12px;
   }
 `
