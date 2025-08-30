@@ -21,17 +21,13 @@ export const Banner = styled.div`
     top: 0;
     left: 0;
     content: '';
-    opacity: 0.3;
+    opacity: 0;
   }
 
   .container {
     z-index: 1;
-    position: relative;
-    display: flex;
-    flex-direction: column;
     height: 100%;
     margin: 0 auto;
-    justify-content: space-between;
 
     div {
       margin-top: 16px;
@@ -39,12 +35,14 @@ export const Banner = styled.div`
   }
 `
 export const InfosProduct = styled.div`
-  padding: 16px;
+  padding: 32px;
   background-color: ${Cores.preto};
+  position: absolute;
+  bottom: 48px;
   width: fit-content;
   font-weight: bold;
-  border-radius: 8px;
   opacity: 0.9;
+  z-index: 1;
 
   h2 {
     font-size: 28px;

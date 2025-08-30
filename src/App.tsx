@@ -23,9 +23,7 @@ function App() {
       {/* ScrolToTop faz com que a posição anterior do scroll seja perdida ao trocar para nova página */}
       <ScrollToTop />
       <GlobalCss />
-      <div className="container">
-        <Header />
-      </div>
+      <Header />
       <Rotas />
       <EmailCaptureSection />
       <Footer />

@@ -1,4 +1,5 @@
 import ProductList from '../../../components/ProductList'
+import Section from '../../../components/Section'
 import { useGetJogosQuery } from '../../../Services/api'
 
 const Esportes = () => {
@@ -15,9 +16,9 @@ const Esportes = () => {
   )
 
   return (
-    <main>
-      <ProductList games={jogosEsportes} title="Esportes" background="black" />
-    </main>
+    <Section title="Esportes" background="black">
+      <ProductList games={jogosEsportes} />
+    </Section>
   )
 }
 

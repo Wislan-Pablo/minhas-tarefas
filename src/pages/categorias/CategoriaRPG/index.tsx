@@ -1,4 +1,5 @@
 import ProductList from '../../../components/ProductList'
+import Section from '../../../components/Section'
 import { useGetJogosQuery } from '../../../Services/api'
 
 const Rpg = () => {
@@ -13,9 +14,9 @@ const Rpg = () => {
   const jogosRPG = lancamentos.filter((jogo) => jogo.categoria === 'RPG')
 
   return (
-    <main>
-      <ProductList games={jogosRPG} title="RPG" background="black" />
-    </main>
+    <Section title="RPG" background="black">
+      <ProductList games={jogosRPG} />
+    </Section>
   )
 }
 

@@ -14,12 +14,16 @@ const Hero = ({ game }: Props) => {
   const { adicionado, handleAdicionar } = useAdicionarCarrinho(game)
 
   return (
-    <Banner style={{ backgroundImage: `url(${bannerImg})` }}>
-      <div className="container">
-        <div>
-          <Tag>RPG</Tag>
-          <Tag>PS5</Tag>
+    <div className="containerBanner">
+      <Banner style={{ backgroundImage: `url(${bannerImg})` }}>
+        <div className="container">
+          <div>
+            <Tag>RPG</Tag>
+            <Tag>PS5</Tag>
+          </div>
         </div>
+      </Banner>
+      <div className="container">
         <InfosProduct>
           <h2>{game.titulo}</h2>
           <p>
@@ -50,7 +54,7 @@ const Hero = ({ game }: Props) => {
           </BtnComprar>
         </InfosProduct>
       </div>
-    </Banner>
+    </div>
   )
 }
 

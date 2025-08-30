@@ -4,13 +4,17 @@ import { Cores } from '../../styles'
 
 export const ContainerEmailCapture = styled.div`
   background-color: ${Cores.azul};
-  padding: 32px;
+  padding: 64px;
   border-radius: 16px;
   text-align: center;
 
-  h2,
+  h2 {
+    margin-bottom: 28px;
+  }
+
   p {
-    margin-bottom: 24px;
+    position: relative;
+    margin-bottom: 8px;
   }
 `
 

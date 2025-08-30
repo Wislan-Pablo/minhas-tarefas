@@ -54,12 +54,14 @@ export const ContainerProductCart = styled.div`
   display: flex;
   align-items: center;
   border-radius: 6px;
-  padding-top: 2px;
+  padding: 2px;
   border: 1px solid ${Cores.branco};
   margin-bottom: 12px;
   text-decoration: none;
 
   button {
+    display: flex;
+    vertical-align: center;
     padding: 0 4px;
     cursor: pointer;
     background-color: transparent;

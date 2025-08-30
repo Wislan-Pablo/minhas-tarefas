@@ -1,7 +1,7 @@
-import ProductList from '../../components/ProductList'
+import Section from '../../components/Section'
 
 const Promocoes = () => {
-  return <ProductList title="Promoções" background="black" />
+  return <Section title="Promoções" background="black" />
 }
 
 export default Promocoes

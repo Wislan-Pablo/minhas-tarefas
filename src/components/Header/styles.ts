@@ -1,17 +1,14 @@
-import styled, { css, keyframes } from 'styled-components'
+import styled, { css } from 'styled-components'
 import { Cores } from '../../styles'
-import { ButtonLink } from '../Button/styles'
 
 export const HeaderBar = styled.header`
   background-image: linear-gradient(45deg, ${Cores.preto}, ${Cores.azul});
-  padding: 16px 24px;
-  border-radius: 16px;
+  padding: 16px 0;
   margin: 0 auto;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  margin-bottom: 32px;
   position: relative;
-  max-width: 1024px;
   width: 100%;
   z-index: 999;
 
@@ -20,9 +17,13 @@ export const HeaderBar = styled.header`
     top: 0;
     left: 50%;
     transform: translateX(-50%);
-    border-radius: 0 0 16px 16px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     opacity: 0.95;
+  }
+
+  .containerSemMargem {
+    display: flex;
+    justify-content: space-between;
   }
 
   a {
@@ -223,7 +224,7 @@ export const ContainerUserLogin = styled.div`
 // *** Bloco do campo de busca ***
 export const ContainerSearch = styled.div`
   position: absolute;
-  top: 108px; /* altura do HeaderBar fixo */
+  top: 74px; /* altura do HeaderBar fixo */
   left: 0;
   z-index: 999;
   width: 100%;
@@ -238,7 +239,7 @@ export const ContainerSearch = styled.div`
 
   input {
     flex: 1;
-    max-width: 400px;
+    max-width: 46%;
     padding: 8px;
     font-size: 18px;
     border-radius: 8px;

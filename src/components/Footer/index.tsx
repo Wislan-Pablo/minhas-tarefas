@@ -4,7 +4,7 @@ import logo from '../../assets/images/logo2.svg' // ajuste o caminho da logo
 const Footer = () => {
   return (
     <Rodape>
-      <div className="container">
+      <div className="containerSemMargem">
         <div className="footer-top">
           {/* Logo */}
           <img src={logo} alt="Eplay" className="logo" />
@@ -103,7 +103,6 @@ const Footer = () => {
             </li>
           </ul>
         </div>
-
         {/* Copyright */}
         <p>© 2025 Gaming. Todos os direitos reservados.</p>
       </div>

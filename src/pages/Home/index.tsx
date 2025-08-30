@@ -1,5 +1,6 @@
 import Banner from '../../components/Banner'
 import ProductList from '../../components/ProductList'
+import Section from '../../components/Section'
 import { useGetJogosQuery } from '../../Services/api'
 
 const Home = () => {
@@ -18,9 +19,15 @@ const Home = () => {
   return (
     <main>
       <Banner />
-      <ProductList games={promocoes} title="Promoções" background="gray" />
-      <ProductList games={lancamentos} title="Em breve" background="black" />
-      <ProductList games={promocoes} title="Promoções" background="gray" />
+      <Section title="Promoções" background="gray">
+        <ProductList games={promocoes} />
+      </Section>
+      <Section title="Em breve" background="black">
+        <ProductList games={lancamentos} />
+      </Section>
+      <Section title="Promoções" background="gray">
+        <ProductList games={promocoes} />
+      </Section>
     </main>
   )
 }

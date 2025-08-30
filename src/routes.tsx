@@ -7,7 +7,7 @@ import CategoriaRPG from './pages/categorias/CategoriaRPG'
 import CategoriaEsportes from './pages/categorias/CategoriaEsportes'
 import Novidades from './pages/Novidades'
 import Promocoes from './pages/Promocoes'
-import ProductDetails from './components/Product/ProductDetails'
+import ProductDetails from './pages/ProductDetails'
 
 const Rotas = () => (
   <Routes>

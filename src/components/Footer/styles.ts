@@ -1,32 +1,23 @@
 import styled from 'styled-components'
 import { Cores } from '../../styles'
+import { GlobalCss } from '../../styles'
 
 export const Rodape = styled.footer`
   background-image: linear-gradient(45deg, ${Cores.preto}, ${Cores.azul});
-  padding: 16px;
+  padding: 32px 32px 8px 32px;
   margin-top: 48px;
   color: ${Cores.branco};
   position: relative;
 
-  .container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-
   .footer-top {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    flex-wrap: wrap;
-    gap: 28.9%;
-    margin-bottom: 40px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    column-gap: 32px;
   }
 
   .logo {
-    width: 180px; /* mesma dimensão do Header */
-    height: auto;
+    width: 179px; /* mesma dimensão do Header */
+    height: 59px;
   }
 
   .footer-menu,
@@ -50,7 +41,7 @@ export const Rodape = styled.footer`
 
   .social {
     gap: 16px;
-    margin-bottom: 24px;
+    margin: 32px 0;
 
     .social-links {
       text-align: center;
@@ -81,11 +72,8 @@ export const Rodape = styled.footer`
   }
 
   p {
-    font-size: 16px;
+    position: relative;
     text-align: center;
-    margin: 0;
-    position: absolute;
-    bottom: 16px;
   }
 
   @media (max-width: 768px) {

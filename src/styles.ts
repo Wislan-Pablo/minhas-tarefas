@@ -16,6 +16,11 @@ export const GlobalCss = createGlobalStyle`
     box-sizing: border-box;
     font-family: Roboto, sans-serif;
     list-style: none;
+    font-family: "IBM Plex Sans", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+    font-variation-settings:
+    "wdth" 100;
   }
 
   ul, li {
@@ -30,12 +35,34 @@ export const GlobalCss = createGlobalStyle`
   body{
     background-color: ${Cores.cinza};
     color: ${Cores.branco};
+    margin-top: 0;
   }
 
   .container {
-    max-width: 1024px;
+    max-width: 1160px;
     width: 100%;
-    margin: 32px auto;
+    margin: 48px auto;
+  }
+
+  .containerSemMargem {
+    max-width: 1160px;
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  .containerBanner {
+    width: 100%;
+    height: 580px;
+    position: relative;
+    background-color: ${Cores.preto};
+  }
+
+  .flexDiv {
+    width: 100%;
+    display: flex;
+    margin: 0 auto;
+    padding: 0;
+    justify-content: space-between;
   }
 
 `
