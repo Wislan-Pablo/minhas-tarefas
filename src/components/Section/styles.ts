@@ -6,12 +6,12 @@ import { Props } from './index'
 export const Title = styled.h2`
   font-size: 22px;
   font-weight: bold;
-  margin-bottom: 32px;
+  margin-bottom: 40px;
 `
 
 export const Container = styled.section<Omit<Props, 'title' | 'games'>>`
   width: 100%;
-  padding: 4px 0;
+  padding: 40px 0;
   background-color: ${(props) =>
     props.background === 'gray'
       ? Cores.cinza

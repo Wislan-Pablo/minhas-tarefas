@@ -1,12 +1,12 @@
+import Card from '../Card'
 import { ContainerCart } from './styles'
+import { Props } from '../Card'
 
-const Cart = () => (
+const Cart = ({ children, title }: Props) => (
   <>
-    <div className="container">
-      <ContainerCart>
-        <h1>Finalizar Compra</h1>
-      </ContainerCart>
-    </div>
+    <ContainerCart>
+      <Card title={title} children={children} />
+    </ContainerCart>
   </>
 )
 

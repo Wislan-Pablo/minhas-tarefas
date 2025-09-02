@@ -35,14 +35,17 @@ export const ButtonLink = styled(Link)`
 `
 
 export const ButtonCTA = styled.a`
+  width: fit-content;
   padding: 8px 16px;
   border-radius: 8px;
   background-image: linear-gradient(45deg, ${Cores.azul}, ${Cores.verde});
   background-size: 200%;
   background-position: left;
-  transition: background-position 0.2s ease-in-out;
+  transition: background-color 0.3s ease, transform 0.4s ease;
 
   &:hover {
     background-position: right;
+    cursor: pointer;
+    transform: scale(1.03);
   }
 `

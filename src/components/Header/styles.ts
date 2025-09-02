@@ -157,8 +157,10 @@ export const BtnSearch = styled.div`
     width: 36px;
     height: 36px;
     transform: rotate(100deg);
+    transition: transform 0.2s ease;
 
     &:hover {
+      transform: scale(1.05) rotate(90deg);
       cursor: pointer;
     }
   }

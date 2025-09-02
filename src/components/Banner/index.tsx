@@ -5,7 +5,7 @@ import Button from '../Button'
 
 const Banner = () => (
   <Imagem style={{ backgroundImage: `url(${BannerImg})` }}>
-    <div className="container">
+    <div className="containerSemMargem">
       <Tag size="big">Destaque do Dia</Tag>
       <div>
         <Titulo>Marvel&apos;s Spider-Man: Miles Morales PS4 e PS5</Titulo>

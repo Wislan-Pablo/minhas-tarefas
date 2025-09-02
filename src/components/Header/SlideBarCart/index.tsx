@@ -1,13 +1,13 @@
 import { useState, useRef, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { data, Link } from 'react-router-dom'
 import * as S from './styles'
 import { Game } from '../../../App'
 import { paraReal } from '../../Product'
 import Button from '../../Button'
 import { esvaziar } from '../../../store/reducers/carrinho'
 
-type Props = {
+export type Props = {
   sidebarOpen: boolean
   setSidebarOpen: (open: boolean) => void
   rows: Array<
@@ -54,58 +54,49 @@ export const SideBarCart = ({
 
   return (
     <S.Sidebar ref={sidebarRef} open={sidebarOpen} scrollable={isScrollable}>
-      <S.ContainerRetornar onClick={() => setSidebarOpen(false)}>
-        <div>
+      <S.HeaderCart>
+        <h1>Continuar Compra</h1>
+        <div onClick={() => setSidebarOpen(false)}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth="1.5"
-            stroke="currentColor"
+            width="16"
+            height="16"
+            fill="currentColor"
+            viewBox="0 0 16 16"
           >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M6.75 15.75 3 12m0 0 3.75-3.75M3 12h18"
-            />
+            <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z" />
           </svg>
-          <span>Retornar</span>
         </div>
-      </S.ContainerRetornar>
+      </S.HeaderCart>
 
       <S.SidebarContent>
-        <div className="TitleSideBarContent">
-          <h2>Sua Cesta de Produtos</h2>
-          <span>
-            <div className="NumberBasket">
-              <strong>
-                {rows.filter((row) => row.type === 'item').length}
-              </strong>
-            </div>
-          </span>
+        <div className="prices">
+          <strong>Total:</strong>
+          <strong>{paraReal(valorTotal)}</strong>
+        </div>
+        <div className="codigoCupom">
+          <label htmlFor="codigoCupom">Resgatar código:</label>
+          <input
+            type="text"
+            id="codigoCupom"
+            placeholder="Inserir o código de desconto"
+          />
         </div>
 
-        {rows.length === 0 ? (
-          <p>
-            {' '}
-            A sua cesta está vazia. <br />
-            Adicione produtos para continuar.{' '}
-          </p>
-        ) : (
+        {
+          rows.length === 0 ? (
+            <p>
+              {' '}
+              A sua cesta está vazia. <br />
+              Adicione produtos para continuar.{' '}
+            </p>
+          ) : null /*
           <>
             <ul>
               {rows.map((row) => {
                 if (row.type === 'placeholder') {
                   return (
-                    <div
-                      key={`placeholder-${row.data.id}`}
-                      style={{
-                        height: row.data.height || 48,
-                        display: 'flex',
-                        alignItems: 'center',
-                        marginBottom: 8
-                      }}
-                    >
+                    <div key={`placeholder-${row.data.id}`}>
                       <span>Item removido com sucesso!</span>
                     </div>
                   )
@@ -114,6 +105,14 @@ export const SideBarCart = ({
                 const item = row.data
                 return (
                   <S.ContainerProductCart key={item.id}>
+                    <li>
+                      <Link
+                        to={`/product-details/${item.id}`}
+                        state={{ game: item }}
+                      >
+                        {item.titulo} - {paraReal(item.preco)}
+                      </Link>
+                    </li>
                     <button
                       type="button"
                       onClick={() => handleRemoveItem(item.id)}
@@ -134,44 +133,48 @@ export const SideBarCart = ({
                       </svg>
                       <title>Remover Este Item</title>
                     </button>
-                    <li>
-                      <Link
-                        to={`/product-details/${item.id}`}
-                        state={{ game: item }}
-                      >
-                        {item.titulo} - {paraReal(item.preco)}
-                      </Link>
-                    </li>
                   </S.ContainerProductCart>
                 )
               })}
             </ul>
-            <S.BtnEsvaziarCesta onClick={handleClearAll}>
-              <a title="Remove todos os items da cesta">Esvaziar Cesta</a>
-            </S.BtnEsvaziarCesta>
           </>
-        )}
+          */
+        }
 
-        <strong>Total: {paraReal(valorTotal)}</strong>
         {rows.filter((row) => row.type === 'item').length > 0 && (
-          <Link to="/checkout" onClick={() => setSidebarOpen(false)}>
-            <Button type="link" to="/checkout">
-              <span>Finalizar Compra</span>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth="1.5"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3"
-                />
-              </svg>
-            </Button>
-          </Link>
+          <div className="btnMetodoPag">
+            <span>Método de pagamento:</span>
+            <Link to="/checkout" onClick={() => setSidebarOpen(false)}>
+              <Button type="link" to="/checkout">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="8"
+                  height="8"
+                  fill="currentColor"
+                  viewBox="0 0 16 16"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2"
+                  />
+                </svg>
+                <span>Adicionar método de pagamento</span>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="m8.25 4.5 7.5 7.5-7.5 7.5"
+                  />
+                </svg>
+              </Button>
+            </Link>
+          </div>
         )}
       </S.SidebarContent>
     </S.Sidebar>

@@ -11,6 +11,7 @@ export const ContainerDetails = styled.div`
   .flexDiv {
     max-width: 800px;
     align-items: top;
+    padding: 0 32px;
   }
 
   .content {
@@ -25,7 +26,7 @@ export const ContainerDescription = styled.div`
   max-width: 800px;
   width: 100%;
   padding: 32px;
-  background-color: ${Cores.cinza};
+  background-color: ${Cores.preto};
   margin: 0 auto;
   text-align: justify;
 `
@@ -35,8 +36,8 @@ export const DetailsGrid = styled.div`
   grid-template-columns: auto auto;
   max-width: 100%;
   max-width: 800px;
-  height: auto;
-  margin: 0 auto 48px;
+  height: 400px;
+  margin: 0 auto;
   gap: 16px; /* espaço entre colunas, opcional */
 
   ul {
@@ -45,6 +46,7 @@ export const DetailsGrid = styled.div`
     padding: 0 16px;
     margin: 0;
     width: fit-content;
+    heigth: auto;
     overflow: hidden;
     text-align: left;
   }
@@ -57,5 +59,7 @@ export const DetailsGrid = styled.div`
 `
 
 export const LegalText = styled.p`
+  position: relative;
   text-align: center;
+  margin-top: 48px;
 `

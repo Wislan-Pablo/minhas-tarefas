@@ -108,7 +108,7 @@ export const BtnComprar = styled.button<BtnProps>`
 
   &:disabled {
     opacity: 0.8; /* opcional: dá uma aparência de desabilitado */
-    border: 2px solid ${Cores.branco};
+    border: 2px solid transparent;
     transform: none; /* evita aplicar transform no hover */
   }
 

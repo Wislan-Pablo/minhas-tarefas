@@ -1,5 +1,4 @@
 import { Banner, InfosProduct } from './styles'
-import bannerImg from '../../assets/images/fundo_hogwarts.png'
 import Tag from '../Tag'
 import { useAdicionarCarrinho } from '../../hooks/HookAdicionarAoCarrinho'
 import { BtnComprar } from '../Product/styles'
@@ -15,7 +14,7 @@ const Hero = ({ game }: Props) => {
 
   return (
     <div className="containerBanner">
-      <Banner style={{ backgroundImage: `url(${bannerImg})` }}>
+      <Banner style={{ backgroundImage: `url(${game.imagem})` }}>
         <div className="container">
           <div>
             <Tag>RPG</Tag>

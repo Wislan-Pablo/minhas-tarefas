@@ -10,7 +10,7 @@ export type Props = {
 const Section = ({ children, title, background }: Props) => {
   return (
     <Container background={background}>
-      <div className="container">
+      <div className="containerSemMargem">
         <Title>{title}</Title>
         {children}
       </div>

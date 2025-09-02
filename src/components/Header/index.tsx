@@ -1,3 +1,4 @@
+// src/components/Header/index.tsx
 import { useState, useEffect, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useLocation } from 'react-router-dom'
@@ -22,10 +23,12 @@ import logo from '../../assets/images/logo2.svg'
 import { RootReducer } from '../../store'
 import { SideBarCart } from './SlideBarCart'
 
+// importa as actions do novo reducer sidebar
+import { abrirSidebar, fecharSidebar } from '../../store/reducers/sidebar'
+
 const Header = () => {
   const dispatch = useDispatch()
   const [showCategories, setShowCategories] = useState(false)
-  const [sidebarOpen, setSidebarOpen] = useState(false)
   const [isFixed, setIsFixed] = useState(false)
 
   // Mensagens/espaçadores para itens removidos
@@ -42,6 +45,9 @@ const Header = () => {
 
   const itens = useSelector((state: RootReducer) => state.carrinho.itens)
   const valorTotal = itens.reduce((acc, item) => acc + item.preco, 0)
+
+  // pega o estado global da sidebar
+  const sidebarOpen = useSelector((state: RootReducer) => state.sidebar.open)
 
   const [searchVisible, setSearchVisible] = useState(false)
   const searchRef = useRef<HTMLDivElement | null>(null)
@@ -74,7 +80,6 @@ const Header = () => {
     // Encontra a posição do item na lista visual
     const position = itens.findIndex((item) => item.id === id)
     const item = itens.find((item) => item.id === id)
-
     let height = 48 // altura padrão
 
     // Remove do Redux
@@ -179,12 +184,12 @@ const Header = () => {
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
-                stroke-width="1.5"
+                strokeWidth="1.5"
                 stroke="currentColor"
               >
                 <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                   d="m15.75 15.75-2.489-2.489m0 0a3.375 3.375 0 1 0-4.773-4.773 3.375 3.375 0 0 0 4.774 4.774ZM21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
                 />
               </svg>
@@ -211,7 +216,7 @@ const Header = () => {
                 </Link>
               </span>
             </ContainerUserLogin>
-            <LinkCart onClick={() => setSidebarOpen(true)}>
+            <LinkCart onClick={() => dispatch(abrirSidebar())}>
               <ContainerCart>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -220,18 +225,12 @@ const Header = () => {
                   fill="currentColor"
                   viewBox="0 0 16 16"
                 >
-                  <path d="M5.757 1.071a.5.5 0 0 1 .172.686L3.383 6h9.234L10.07 1.757a.5.5 0 1 1 .858-.514L13.783 6H15a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1v4.5a2.5 2.5 0 0 1-2.5 2.5h-9A2.5 2.5 0 0 1 1 13.5V9a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h1.217L5.07 1.243a.5.5 0 0 1 .686-.172zM2 9v4.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5V9zM1 7v1h14V7zm3 3a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3A.5.5 0 0 1 4 10m2 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3A.5.5 0 0 1 6 10m2 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3A.5.5 0 0 1 8 10m2 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3a.5.5 0 0 1 .5-.5m2 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3a.5.5 0 0 1 .5-.5" />
+                  <path d="M0 2.5A.5.5 0 0 1 .5 2H2a.5.5 0 0 1 .485.379L2.89 4H14.5a.5.5 0 0 1 .485.621l-1.5 6A.5.5 0 0 1 13 11H4a.5.5 0 0 1-.485-.379L1.61 3H.5a.5.5 0 0 1-.5-.5M3.14 5l.5 2H5V5zM6 5v2h2V5zm3 0v2h2V5zm3 0v2h1.36l.5-2zm1.11 3H12v2h.61zM11 8H9v2h2zM8 8H6v2h2zM5 8H3.89l.5 2H5zm0 5a1 1 0 1 0 0 2 1 1 0 0 0 0-2m-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0m9-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2m-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0" />
                 </svg>
                 <span>
-                  {itens.length > 0 ? (
-                    <div className="NumberBasket">
-                      <strong>{itens.length}</strong>
-                    </div>
-                  ) : (
-                    <div className="NumberBasket">
-                      <strong>{itens.length}</strong>
-                    </div>
-                  )}
+                  <div className="NumberBasket">
+                    <strong>{itens.length}</strong>
+                  </div>
                 </span>
               </ContainerCart>
             </LinkCart>
@@ -254,15 +253,14 @@ const Header = () => {
         </ContainerSearch>
       )}
 
-      {/* Sidebar e overlay - usando o componente SidebarCart */}
-      <SidebarOverlay
-        open={sidebarOpen}
-        onClick={() => setSidebarOpen(false)}
-      />
+      {/* Sidebar e overlay */}
+      <SidebarOverlay open={sidebarOpen} onClick={() => dispatch(fecharSidebar())} />
 
       <SideBarCart
         sidebarOpen={sidebarOpen}
-        setSidebarOpen={setSidebarOpen}
+        setSidebarOpen={(open) =>
+          open ? dispatch(abrirSidebar()) : dispatch(fecharSidebar())
+        }
         rows={rows}
         handleRemoveItem={handleRemoveItem}
         valorTotal={valorTotal}

@@ -1,11 +1,15 @@
 import { createGlobalStyle } from 'styled-components'
 
 export const Cores = {
-  branco: '#EEEEEE',
+  branco: '#FFFFFF',
   preto: '#111111',
   cinza: '#333333',
+  cinzaClaro: '#D8D9D7',
   verde: '#10AC84',
   azul: '#065a60',
+  ocre: '#D99414',
+  bege: '#FFD169',
+  branco2: '#F2F2F0',
   transparent: 'transparent'
 }
 
@@ -14,11 +18,10 @@ export const GlobalCss = createGlobalStyle`
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: Roboto, sans-serif;
     list-style: none;
     font-family: "IBM Plex Sans", sans-serif;
+    font-size: 16px;
     font-optical-sizing: auto;
-    font-style: normal;
     font-variation-settings:
     "wdth" 100;
   }
@@ -50,11 +53,20 @@ export const GlobalCss = createGlobalStyle`
     margin: 0 auto;
   }
 
+  .centralizadorVertical {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: fit-content;
+    height: auto;
+    margin: 0 auto;
+  }
+
   .containerBanner {
     width: 100%;
     height: 580px;
     position: relative;
-    background-color: ${Cores.preto};
+    background-color: ${Cores.cinza};
   }
 
   .flexDiv {

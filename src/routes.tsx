@@ -2,13 +2,12 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import Home from './pages/Home'
 import CategoriaAcao from './pages/categorias/CategoriaAcao'
 import CategoriaAventura from './pages/categorias/CategoriaAventura'
-import Carrinho from './pages/Carrrinho'
 import CategoriaRPG from './pages/categorias/CategoriaRPG'
 import CategoriaEsportes from './pages/categorias/CategoriaEsportes'
 import Novidades from './pages/Novidades'
 import Promocoes from './pages/Promocoes'
 import ProductDetails from './pages/ProductDetails'
-
+import Checkout from './pages/Checkout'
 const Rotas = () => (
   <Routes>
     <Route path="/" element={<Home />} />
@@ -19,7 +18,7 @@ const Rotas = () => (
     <Route path="/novidades" element={<Novidades />} />
     <Route path="/promocoes" element={<Promocoes />} />
     <Route path="/product-details/:id" element={<ProductDetails />} />
-    <Route path="/checkout" element={<Carrinho />} />
+    <Route path="/checkout" element={<Checkout />} />
   </Routes>
 )
 

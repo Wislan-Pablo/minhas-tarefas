@@ -21,26 +21,24 @@ export const Sidebar = styled.div<{ open: boolean; scrollable: boolean }>`
   overflow-y: ${({ scrollable }) => (scrollable ? 'auto' : 'hidden')};
 `
 
-export const ContainerRetornar = styled.div`
+export const HeaderCart = styled.div`
   display: flex;
+  padding: 24px;
+  justify-content: space-between;
   align-items: center;
-  cursor: pointer;
 
-  &:hover {
-    text-decoration: underline;
+  h1 {
+    font-size: 24px;
   }
 
   div {
-    display: flex;
-    align-items: center;
+    padding: 4px;
     cursor: pointer;
-    margin: 8px 0 0 24px;
   }
 
   svg {
-    width: 32px;
-    height: 32px;
-    margin-right: 8px;
+    width: 24px;
+    height: 24px;
   }
 `
 
@@ -53,8 +51,9 @@ const fadeOut = keyframes`
 export const ContainerProductCart = styled.div`
   display: flex;
   align-items: center;
+  justify-content: space-between;
   border-radius: 6px;
-  padding: 2px;
+  padding: 2px 4px;
   border: 1px solid ${Cores.branco};
   margin-bottom: 12px;
   text-decoration: none;
@@ -62,7 +61,6 @@ export const ContainerProductCart = styled.div`
   button {
     display: flex;
     vertical-align: center;
-    padding: 0 4px;
     cursor: pointer;
     background-color: transparent;
     border: none;
@@ -77,7 +75,6 @@ export const ContainerProductCart = styled.div`
   svg {
     width: 28px;
     height: 28px;
-    margin-right: 4px;
     transition: fill 0.4s ease, stroke 0.3s ease;
 
     &:hover {
@@ -109,7 +106,7 @@ export const BtnEsvaziarCesta = styled.div`
 `
 
 export const SidebarContent = styled.div`
-  padding: 24px;
+  padding: 0 24px;
 
   h2 {
     font-size: 20px;
@@ -127,45 +124,63 @@ export const SidebarContent = styled.div`
     margin-bottom: 16px;
   }
 
-  .TitleSideBarContent {
+  .prices {
     display: flex;
     align-items: center;
-    flex-direction: row;
-    margin-bottom: 16px;
+    justify-content: space-between;
   }
 
-  .NumberBasket {
-    background-color: ${Cores.branco};
-    color: ${Cores.azul};
-    border-radius: 50%;
-    width: 20px;
-    height: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
-    font-weight: bold;
-    z-index: 1000;
-  }
+  .codigoCupom {
+    width: 100%;
+    display: block;
+    margin-top: 48px;
 
-  .NumberBasket strong {
-    font-size: 16px;
-    color: ${Cores.azul};
-    margin: 0; /* remove o margin-left do strong padrão */
+    label {
+      font-size: 16px;
+      font-weight: semi-bold;
+    }
+
+    input {
+      width: 100%;
+      heigth: 48px;
+      padding: 8px 16px;
+      border-radius: 24px;
+      border: 1px solid ${Cores.azul};
+      color: ${Cores.branco};
+      background-color: rgba(6, 6, 6, 0.3);
+      margin-top: 16px;
+
+      &::active {
+        border: 1px solid ${Cores.branco};
+      }
+    }
   }
 
   strong {
-    font-size: 20px;
+    font-size: 16px;
     font-weight: semi-bold;
     margin-top: 16px;
-    margin-bottom: 24px;
     display: block;
   }
 
+  b {
+    font-size: 14px;
+  }
+
+  .btnMetodoPag {
+    width: 100%;
+    display: block;
+    margin-top: 24px;
+
+    span {
+      font-weight: semi-bold;
+    }
+  }
+
   ${ButtonLink} {
-    max-width: 200px;
     width: 100%;
     display: flex;
+    padding: 12px;
     align-items: center;
     justify-content: space-between;
     margin-top: 16px;
@@ -175,8 +190,8 @@ export const SidebarContent = styled.div`
     }
 
     svg {
-      width: 32px;
-      height: 32px;
+      width: 24px;
+      height: 24px;
     }
   }
 `

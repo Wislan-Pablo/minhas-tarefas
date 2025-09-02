@@ -18,10 +18,10 @@ const ProductDetails = () => {
     <>
       <S.ContainerDetails>
         <Hero game={state.game} />
-        <Section title="Galeria" background="gray">
+        <Section title="Galeria" background="black">
           <p>Fotos</p>
         </Section>
-        <Section title="Sobre o jogo" background="black">
+        <Section title="Sobre o jogo" background="gray">
           <S.ContainerDescription>
             <p>
               Hogwarts Legacy é um RPG de ação de mundo aberto ambientado no

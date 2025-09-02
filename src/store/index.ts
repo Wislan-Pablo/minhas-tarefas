@@ -1,12 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit'
 
 import carrinhoReducer from './reducers/carrinho'
-
+import sidebarReducer from './reducers/sidebar'
 import api from '../Services/api'
 
 export const store = configureStore({
   reducer: {
     carrinho: carrinhoReducer,
+    sidebar: sidebarReducer,
     [api.reducerPath]: api.reducer
   },
   middleware: (getDefaultMiddleware) =>

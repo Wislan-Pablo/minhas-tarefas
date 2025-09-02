@@ -9,7 +9,7 @@ export const Imagem = styled.div`
   background-size: cover;
   font-weight: bold;
 
-  .container {
+  .containerSemMargem {
     max-width: 1024px;
     position: relative;
     padding-top: 340px;
