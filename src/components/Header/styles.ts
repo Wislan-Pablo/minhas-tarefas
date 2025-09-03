@@ -7,7 +7,6 @@ export const HeaderBar = styled.header`
   margin: 0 auto;
   display: flex;
   align-items: center;
-  margin-bottom: 32px;
   position: relative;
   width: 100%;
   z-index: 999;
@@ -302,7 +301,7 @@ export const SidebarOverlay = styled.div<{ open: boolean }>`
   height: 100vh;
   top: 0;
   left: 0;
-  background: rgba(0, 0, 0, 0.4);
+  background: rgba(0, 0, 0, 0.95);
   opacity: ${({ open }) => (open ? 1 : 0)};
   visibility: ${({ open }) => (open ? 'visible' : 'hidden')};
   transition: opacity 0.3s ease, visibility 0.3s ease;

@@ -7,6 +7,7 @@ export const Sidebar = styled.div<{ open: boolean; scrollable: boolean }>`
   top: 0;
   right: 0;
   width: 380px;
+  padding: 24px;
   height: 100vh;
   background: ${Cores.azul};
   color: ${Cores.branco};
@@ -23,7 +24,7 @@ export const Sidebar = styled.div<{ open: boolean; scrollable: boolean }>`
 
 export const HeaderCart = styled.div`
   display: flex;
-  padding: 24px;
+  margin-bottom: 16px;
   justify-content: space-between;
   align-items: center;
 
@@ -42,58 +43,25 @@ export const HeaderCart = styled.div`
   }
 `
 
-const fadeOut = keyframes`
-  0% { opacity: 1; }
-  80% { opacity: 1; }
-  100% { opacity: 0; }
-`
+export const ContainerVoidCart = styled.div`
+  width: 100%;
+  display: block;
 
-export const ContainerProductCart = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  border-radius: 6px;
-  padding: 2px 4px;
-  border: 1px solid ${Cores.branco};
-  margin-bottom: 12px;
-  text-decoration: none;
-
-  button {
-    display: flex;
-    vertical-align: center;
-    cursor: pointer;
-    background-color: transparent;
-    border: none;
+  img {
+    width: 200px;
+    height: auto;
+    margin: 24px auto;
   }
 
-  .removed-message {
+  a {
     color: ${Cores.branco};
-    font-weight: bold;
-    animation: ${fadeOut} 2s forwards;
-  }
-
-  svg {
-    width: 28px;
-    height: 28px;
-    transition: fill 0.4s ease, stroke 0.3s ease;
+    cursor: pointer;
 
     &:hover {
-      fill: ${Cores.branco};
-      stroke: ${Cores.azul};
-    }
-  }
-
-  li {
-    a {
-      color: ${Cores.branco};
-
-      &:hover {
-        text-decoration: underline;
-      }
+      text-decoration: underline;
     }
   }
 `
-
 export const BtnEsvaziarCesta = styled.div`
   a {
     font-size: 16px;
@@ -106,7 +74,7 @@ export const BtnEsvaziarCesta = styled.div`
 `
 
 export const SidebarContent = styled.div`
-  padding: 0 24px;
+  padding: 0;
 
   h2 {
     font-size: 20px;

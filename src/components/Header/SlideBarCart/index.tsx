@@ -1,11 +1,12 @@
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect, useMemo } from 'react'
 import { useDispatch } from 'react-redux'
-import { data, Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import * as S from './styles'
 import { Game } from '../../../App'
 import { paraReal } from '../../Product'
 import Button from '../../Button'
 import { esvaziar } from '../../../store/reducers/carrinho'
+import CartEmpity from '../../../assets/images/Cart_Empty_Dark.svg'
 
 export type Props = {
   sidebarOpen: boolean
@@ -29,6 +30,23 @@ export const SideBarCart = ({
   const [isScrollable, setIsScrollable] = useState(false)
   const dispatch = useDispatch()
 
+  const isEmpty = rows.filter((row) => row.type === 'item').length === 0
+
+  // Subtotal calculado a partir dos itens
+  const subtotal = useMemo(() => {
+    return rows.reduce((acc, row) => {
+      if (row.type === 'item') {
+        return acc + row.data.preco
+      }
+      return acc
+    }, 0)
+  }, [rows])
+
+  // Quantidade de itens no carrinho
+  const itemCount = useMemo(() => {
+    return rows.filter((row) => row.type === 'item').length
+  }, [rows])
+
   useEffect(() => {
     const checkOverflow = () => {
       if (sidebarRef.current) {
@@ -42,6 +60,7 @@ export const SideBarCart = ({
     return () => window.removeEventListener('resize', checkOverflow)
   }, [rows])
 
+  // Remove todos os itens do carrinho
   const handleClearAll = () => {
     const confirmar = window.confirm(
       'Tem certeza que deseja remover todos os itens da Cesta de Produtos?'
@@ -54,8 +73,9 @@ export const SideBarCart = ({
 
   return (
     <S.Sidebar ref={sidebarRef} open={sidebarOpen} scrollable={isScrollable}>
+      {/* Header muda dependendo se está vazio ou não */}
       <S.HeaderCart>
-        <h1>Continuar Compra</h1>
+        <h1>{isEmpty ? 'Seu Carrinho' : 'Continuar Compra'}</h1>
         <div onClick={() => setSidebarOpen(false)}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -69,114 +89,91 @@ export const SideBarCart = ({
         </div>
       </S.HeaderCart>
 
-      <S.SidebarContent>
-        <div className="prices">
-          <strong>Total:</strong>
-          <strong>{paraReal(valorTotal)}</strong>
-        </div>
-        <div className="codigoCupom">
-          <label htmlFor="codigoCupom">Resgatar código:</label>
-          <input
-            type="text"
-            id="codigoCupom"
-            placeholder="Inserir o código de desconto"
-          />
-        </div>
-
-        {
-          rows.length === 0 ? (
-            <p>
-              {' '}
-              A sua cesta está vazia. <br />
-              Adicione produtos para continuar.{' '}
-            </p>
-          ) : null /*
-          <>
-            <ul>
-              {rows.map((row) => {
-                if (row.type === 'placeholder') {
-                  return (
-                    <div key={`placeholder-${row.data.id}`}>
-                      <span>Item removido com sucesso!</span>
-                    </div>
-                  )
-                }
-
-                const item = row.data
-                return (
-                  <S.ContainerProductCart key={item.id}>
-                    <li>
-                      <Link
-                        to={`/product-details/${item.id}`}
-                        state={{ game: item }}
-                      >
-                        {item.titulo} - {paraReal(item.preco)}
-                      </Link>
-                    </li>
-                    <button
-                      type="button"
-                      onClick={() => handleRemoveItem(item.id)}
-                      aria-label={`Remover ${item.titulo}`}
-                    >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        strokeWidth="1.5"
-                        stroke="white"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
-                        />
-                      </svg>
-                      <title>Remover Este Item</title>
-                    </button>
-                  </S.ContainerProductCart>
-                )
-              })}
-            </ul>
-          </>
-          */
-        }
-
-        {rows.filter((row) => row.type === 'item').length > 0 && (
-          <div className="btnMetodoPag">
-            <span>Método de pagamento:</span>
-            <Link to="/checkout" onClick={() => setSidebarOpen(false)}>
-              <Button type="link" to="/checkout">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="8"
-                  height="8"
-                  fill="currentColor"
-                  viewBox="0 0 16 16"
-                >
-                  <path
-                    fill-rule="evenodd"
-                    d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2"
-                  />
-                </svg>
-                <span>Adicionar método de pagamento</span>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke-width="1.5"
-                  stroke="currentColor"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="m8.25 4.5 7.5 7.5-7.5 7.5"
-                  />
-                </svg>
-              </Button>
-            </Link>
+      {/* Se estiver vazio → mostra mensagem */}
+      {isEmpty ? (
+        <S.ContainerVoidCart>
+          <span>O carrinho está vazio.</span>
+          <br />
+          <div className="centralizadorVertical">
+            <img src={CartEmpity} alt="Cart Empity Icon" />
+            <a
+              onClick={() => setSidebarOpen(false)}
+              title="fechar e continuar comprando"
+            >
+              Continuar comprando
+            </a>
           </div>
-        )}
-      </S.SidebarContent>
+        </S.ContainerVoidCart>
+      ) : (
+        // Se NÃO estiver vazio → renderiza conteúdo
+        <S.SidebarContent>
+          <div>
+            <div className="prices">
+              <strong>SubTotal</strong>
+              <strong>{paraReal(subtotal)}</strong>
+            </div>
+            <div className="prices">
+              <strong>
+                Total ({itemCount} {itemCount === 1 ? 'item' : 'itens'})
+              </strong>
+              <strong>{paraReal(valorTotal)}</strong>
+            </div>
+          </div>
+
+          {/* Botão Esvaziar Carrinho
+          <div className="clearCart" style={{ marginTop: '1rem' }}>
+            <Button type="button" onClick={handleClearAll}>
+              Esvaziar carrinho
+            </Button>
+          </div>
+          */}
+
+          <div className="codigoCupom">
+            <label htmlFor="codigoCupom">Resgatar código:</label>
+            <input
+              type="text"
+              id="codigoCupom"
+              placeholder="Inserir o código de desconto"
+            />
+          </div>
+
+          {rows.filter((row) => row.type === 'item').length > 0 && (
+            <div className="btnMetodoPag">
+              <span>Método de pagamento:</span>
+              <Link to="/checkout" onClick={() => setSidebarOpen(false)}>
+                <Button type="link" to="/checkout">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="8"
+                    height="8"
+                    fill="currentColor"
+                    viewBox="0 0 16 16"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2"
+                    />
+                  </svg>
+                  <span>Adicionar método de pagamento</span>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth="1.5"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="m8.25 4.5 7.5 7.5-7.5 7.5"
+                    />
+                  </svg>
+                </Button>
+              </Link>
+            </div>
+          )}
+        </S.SidebarContent>
+      )}
     </S.Sidebar>
   )
 }
