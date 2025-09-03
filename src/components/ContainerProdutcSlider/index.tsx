@@ -1,23 +1,23 @@
-import Product from '../Product'
-import * as S from './styles'
+import * as S from '../ProductList/styles'
 import Game from '../../models/Games'
 import { ReactNode } from 'react'
+import ProductSlider from '../ProductSlider'
 
 export type Props = {
   games?: Game[]
   children?: ReactNode
 }
 
-const ProductList = ({ children, games }: Props) => {
+const ContainerProductSlider = ({ children, games }: Props) => {
   return (
     <S.List>
       <S.Produtos>
         {games?.map((game) => (
-          <Product key={game.id} game={game} />
+          <ProductSlider key={game.id} game={game} />
         ))}
       </S.Produtos>
     </S.List>
   )
 }
 
-export default ProductList
+export default ContainerProductSlider

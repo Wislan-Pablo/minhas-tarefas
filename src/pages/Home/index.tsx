@@ -1,6 +1,8 @@
 import Banner from '../../components/Banner'
+import ContainerProductSlider from '../../components/ContainerProdutcSlider'
 import ProductList from '../../components/ProductList'
 import Section from '../../components/Section'
+import Carousel from '../../components/Slider'
 import { useGetJogosQuery } from '../../Services/api'
 
 const Home = () => {
@@ -17,18 +19,18 @@ const Home = () => {
   }
 
   return (
-    <main>
-      <Banner />
+    <>
+      <Carousel />
       <Section title="Promoções" background="gray">
         <ProductList games={promocoes} />
       </Section>
       <Section title="Em breve" background="black">
-        <ProductList games={lancamentos} />
+        <ContainerProductSlider games={lancamentos} />
       </Section>
       <Section title="Promoções" background="gray">
         <ProductList games={promocoes} />
       </Section>
-    </main>
+    </>
   )
 }
 

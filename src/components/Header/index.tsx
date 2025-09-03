@@ -21,7 +21,7 @@ import {
 } from './styles'
 import logo from '../../assets/images/logo2.svg'
 import { RootReducer } from '../../store'
-import { SideBarCart } from './SlideBarCart'
+import { SideBarCart } from './SideBarCart'
 
 // importa as actions do novo reducer sidebar
 import { abrirSidebar, fecharSidebar } from '../../store/reducers/sidebar'
@@ -44,7 +44,7 @@ const Header = () => {
   const handleMouseLeave = () => setShowCategories(false)
 
   const itens = useSelector((state: RootReducer) => state.carrinho.itens)
-  const valorTotal = itens.reduce((acc, item) => acc + item.preco, 0)
+  const valorTotal = itens.reduce((acc: any, item: { preco: any }) => acc + item.preco, 0)
 
   // pega o estado global da sidebar
   const sidebarOpen = useSelector((state: RootReducer) => state.sidebar.open)
@@ -78,8 +78,8 @@ const Header = () => {
   // Remove item e cria placeholder
   const handleRemoveItem = (id: number) => {
     // Encontra a posição do item na lista visual
-    const position = itens.findIndex((item) => item.id === id)
-    const item = itens.find((item) => item.id === id)
+    const position = itens.findIndex((item: { id: number }) => item.id === id)
+    const item = itens.find((item: { id: number }) => item.id === id)
     let height = 48 // altura padrão
 
     // Remove do Redux
@@ -183,9 +183,11 @@ const Header = () => {
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
-                viewBox="0 0 24 24"
+                viewBox="2 2 20 20"
+                width="28"
+                height="28"
                 strokeWidth="1.5"
-                stroke="currentColor"
+                stroke="#ffffff"
               >
                 <path
                   strokeLinecap="round"
@@ -197,13 +199,18 @@ const Header = () => {
             <ContainerUserLogin>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                width="36"
-                height="36"
-                fill="currentColor"
+                width="28"
+                height="28"
+                fill="white"
                 viewBox="0 0 16 16"
               >
-                <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z" />
+                <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
+                <path
+                  fill-rule="evenodd"
+                  d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"
+                />
               </svg>
+              {/*
               <span>
                 Olá,{' '}
                 <Link to="/login">
@@ -215,13 +222,14 @@ const Header = () => {
                   <a title="Ir para tela de Cadastro">Cadastre-se</a>
                 </Link>
               </span>
+              */}
             </ContainerUserLogin>
             <LinkCart onClick={() => dispatch(abrirSidebar())}>
               <ContainerCart>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  width="20"
-                  height="20"
+                  width="28"
+                  height="28"
                   fill="currentColor"
                   viewBox="0 0 16 16"
                 >
@@ -254,7 +262,10 @@ const Header = () => {
       )}
 
       {/* Sidebar e overlay */}
-      <SidebarOverlay open={sidebarOpen} onClick={() => dispatch(fecharSidebar())} />
+      <SidebarOverlay
+        open={sidebarOpen}
+        onClick={() => dispatch(fecharSidebar())}
+      />
 
       <SideBarCart
         sidebarOpen={sidebarOpen}

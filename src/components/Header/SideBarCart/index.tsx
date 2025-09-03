@@ -7,6 +7,7 @@ import { paraReal } from '../../Product'
 import Button from '../../Button'
 import { esvaziar } from '../../../store/reducers/carrinho'
 import CartEmpity from '../../../assets/images/Cart_Empty_Dark.svg'
+import MoonLoader from '../../Loader'
 
 export type Props = {
   sidebarOpen: boolean

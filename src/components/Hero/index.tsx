@@ -13,47 +13,47 @@ const Hero = ({ game }: Props) => {
   const { adicionado, handleAdicionar } = useAdicionarCarrinho(game)
 
   return (
-    <div className="containerBanner">
-      <Banner style={{ backgroundImage: `url(${game.imagem})` }}>
-        <div className="container">
-          <div>
-            <Tag>RPG</Tag>
-            <Tag>PS5</Tag>
+    <>
+      <div className="containerBanner">
+        <Banner style={{ backgroundImage: `url(${game.imagem})` }}>
+          <div className="container">
+            <div>
+              <Tag>RPG</Tag>
+              <Tag>PS5</Tag>
+            </div>
           </div>
-        </div>
-      </Banner>
-      <div className="container">
-        <InfosProduct>
-          <h2>{game.titulo}</h2>
-          <p>
-            {game.precoAntigo === null ? (
-              ''
-            ) : (
-              <span>De {game.precoAntigo && paraReal(game.precoAntigo)}</span>
-            )}
-            Por apenas {paraReal(game.preco)}
-          </p>
-          <BtnComprar
-            onClick={handleAdicionar}
-            $adicionado={adicionado}
-            disabled={adicionado} /* desabilita quando já foi adicionado */
-          >
-            {adicionado
-              ? 'Produto na Cesta :)'
-              : 'Adicionar à Cesta de Produtos'}
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="20"
-              height="20"
-              fill="currentColor"
-              viewBox="0 0 16 16"
+        </Banner>
+        <div className="container">
+          <InfosProduct>
+            <h2>{game.titulo}</h2>
+            <p>
+              {game.precoAntigo === null ? (
+                ''
+              ) : (
+                <span>De {game.precoAntigo && paraReal(game.precoAntigo)}</span>
+              )}
+              Por apenas {paraReal(game.preco)}
+            </p>
+            <BtnComprar
+              onClick={handleAdicionar}
+              $adicionado={adicionado}
+              disabled={adicionado} /* desabilita quando já foi adicionado */
             >
-              <path d="M5.757 1.071a.5.5 0 0 1 .172.686L3.383 6h9.234L10.07 1.757a.5.5 0 1 1 .858-.514L13.783 6H15a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1v4.5a2.5 2.5 0 0 1-2.5 2.5h-9A2.5 2.5 0 0 1 1 13.5V9a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h1.217L5.07 1.243a.5.5 0 0 1 .686-.172zM2 9v4.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5V9zM1 7v1h14V7zm3 3a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3A.5.5 0 0 1 4 10m2 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3A.5.5 0 0 1 6 10m2 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3A.5.5 0 0 1 8 10m2 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3a.5.5 0 0 1 .5-.5m2 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3a.5.5 0 0 1 .5-.5" />
-            </svg>
-          </BtnComprar>
-        </InfosProduct>
+              {adicionado ? 'Produto no carrinho :)' : 'Adicionar ao carrinho'}
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                fill="currentColor"
+                viewBox="0 0 16 16"
+              >
+                <path d="M0 2.5A.5.5 0 0 1 .5 2H2a.5.5 0 0 1 .485.379L2.89 4H14.5a.5.5 0 0 1 .485.621l-1.5 6A.5.5 0 0 1 13 11H4a.5.5 0 0 1-.485-.379L1.61 3H.5a.5.5 0 0 1-.5-.5M3.14 5l.5 2H5V5zM6 5v2h2V5zm3 0v2h2V5zm3 0v2h1.36l.5-2zm1.11 3H12v2h.61zM11 8H9v2h2zM8 8H6v2h2zM5 8H3.89l.5 2H5zm0 5a1 1 0 1 0 0 2 1 1 0 0 0 0-2m-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0m9-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2m-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0" />
+              </svg>
+            </BtnComprar>
+          </InfosProduct>
+        </div>
       </div>
-    </div>
+    </>
   )
 }
 

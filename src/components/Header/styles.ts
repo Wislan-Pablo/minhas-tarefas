@@ -145,17 +145,19 @@ export const DropdownItem = styled.li`
 `
 
 export const ContainerMenuRight = styled.div`
-  max-width: 300px;
+  max-width: fit-content;
   width: 100%;
   display: flex;
+  align-items: center;
+  column-gap: 16px;
   justify-content: space-between;
 `
 
 export const BtnSearch = styled.div`
+  padding: 0;
+
   svg {
-    width: 36px;
-    height: 36px;
-    transform: rotate(100deg);
+    margin: auto;
     transition: transform 0.2s ease;
 
     &:hover {
@@ -171,27 +173,14 @@ export const LinkCart = styled.div`
 `
 
 export const ContainerCart = styled.div`
-  padding: 8px;
-  width: 48px;
-  height: auto;
+  width: 40px;
+  height: 40px;
   position: relative;
-  background-color: ${Cores.azul};
-  border-radius: 8px;
-  background-image: linear-gradient(45deg, ${Cores.azul}, ${Cores.verde});
-  background-size: 200%;
-  background-position: left;
-  transition: background-position 0.3s ease-in-out;
-
-  &:hover {
-    background-position: right;
-    transform: scale(1.03);
-    transition: transform 0.3s ease-in-out;
-  }
 
   .NumberBasket {
     position: absolute;
-    top: 3px; /* sobe a bolinha */
-    right: 5px; /* desloca levemente para a esquerda */
+    top: 1px; /* sobe a bolinha */
+    right: 3px; /* desloca levemente para a esquerda */
     background-color: ${Cores.branco};
     color: ${Cores.azul};
     border-radius: 50%;
