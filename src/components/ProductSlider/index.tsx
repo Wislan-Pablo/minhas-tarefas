@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import { Game } from '../../App'
 import * as S from './styles'
+
 type Props = {
   game: Game
 }
