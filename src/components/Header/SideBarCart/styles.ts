@@ -144,18 +144,35 @@ export const SidebarContent = styled.div`
       font-weight: semi-bold;
     }
   }
+`
 
-  ${ButtonLink} {
+export const BtnPagamento = styled.button`
     width: 100%;
     display: flex;
     padding: 12px;
     align-items: center;
     justify-content: space-between;
     margin-top: 16px;
+      border: 2px solid ${Cores.branco};
+  color: ${Cores.branco};
+  background: transparent;
+  font-size: 16px;
+  font-weight: bold;
+  padding: 8px 16px;
+  border-radius: 8px;
+  transition: background-position 0.3s ease-in-out; /* Transição suave */
 
     &:hover {
+      background-image: linear-gradient(-45deg, ${Cores.verde}, ${Cores.azul});
+      background-size: 200%; /* Define o tamanho do gradiente */
+      background-position: right center; /* Move o gradiente */
+      color: ${Cores.branco}; /* Mantém a cor do texto */
+      border: none; /* Remove a borda */
+      cursor: pointer;
+      padding: 10px 18px; /* Mantém o mesmo tamanho */
       transform: scale(1.03);
     }
+
 
     svg {
       width: 24px;

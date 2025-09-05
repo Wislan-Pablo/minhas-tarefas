@@ -1,5 +1,5 @@
 import { Swiper, SwiperSlide } from 'swiper/react'
-import { Navigation, Pagination, Autoplay } from 'swiper/modules'
+import { Pagination, Autoplay } from 'swiper/modules'
 
 import 'swiper/css'
 import 'swiper/css/navigation'
@@ -14,11 +14,10 @@ type Props = {
 const SlideExpo = ({ games }: Props) => {
   return (
     <Swiper
-      modules={[Navigation, Pagination, Autoplay]}
+      modules={[Pagination, Autoplay]}
       slidesPerView={5} // 👈 quantidade itens mostrados no limite do Swiper
       spaceBetween={24} // 👈 espaçamento entre os slides
       autoplay={{ delay: 3000, disableOnInteraction: false }}
-      navigation
       color="#fff"
       pagination={{ clickable: true }}
       loop={false} // 👈 não faz sentido loopar se mostrar todos
