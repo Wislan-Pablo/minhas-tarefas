@@ -1,7 +1,8 @@
 import ProductList from '../../components/ProductList'
 import Section from '../../components/Section'
-import Carousel from '../../components/Slider'
 import { useGetJogosQuery } from '../../Services/api'
+import HeroSlider from '../../components/HeroSlider'
+import SliderExpo from '../../components/SliderExpo'
 
 const Home = () => {
   const { data: promocoes = [], error: promocoesError } =
@@ -18,12 +19,12 @@ const Home = () => {
 
   return (
     <>
-      <Carousel effect="slide" />
+      <HeroSlider />
       <Section title="Promoções" background="gray">
         <ProductList games={promocoes} />
       </Section>
       <Section title="Em breve" background="black">
-        <Carousel effect="expo" game={lancamentos}/>
+        <SliderExpo games={lancamentos} />
       </Section>
       <Section title="Promoções" background="gray">
         <ProductList games={promocoes} />

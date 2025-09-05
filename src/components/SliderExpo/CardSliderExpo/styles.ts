@@ -1,9 +1,12 @@
 import styled from 'styled-components'
-import { Cores } from '../../styles'
+import { Cores } from '../../../styles'
 
 export const Produto = styled.div`
   padding: 8px;
+  background-color: ${Cores.cinza};
   border-radius: 8px;
+  width: 200px;
+  height: 340px;
 
   .linkProduto {
     transition: transform 0.2s ease;
@@ -34,6 +37,7 @@ export const Capa = styled.div`
   img {
     display: block;
     width: 100%;
+    height: 200px;
     margin-bottom: 8px;
   }
 `

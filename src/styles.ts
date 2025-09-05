@@ -77,4 +77,31 @@ export const GlobalCss = createGlobalStyle`
     justify-content: space-between;
   }
 
+  .expo-swiper .swiper-wrapper {
+    width: 600px;
+    heigth: auto;
+    background-color: red;
+    transition-timing-function: cubic-bezier(0.87, 0, 0.13, 1) !important;
+
+    img {
+      width: 100px;
+      heigth: auto;
+    }
+  }
+
+  .swiper-button-prev,
+  .swiper-button-next {
+  color: #fff; /* 👈 muda a cor da seta */
+  }
+
+  .swiper-pagination-bullet {
+    background: #fff;     /* cor das bolinhas inativas */
+    opacity: 1;           /* deixa elas bem visíveis */
+  }
+
+  .swiper-pagination-bullet-active {
+    background: ${Cores.azul};  /* cor da bolinha ativa */
+  }
+
+
 `

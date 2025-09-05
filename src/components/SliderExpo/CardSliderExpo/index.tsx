@@ -1,12 +1,12 @@
 import { Link } from 'react-router-dom'
-import { Game } from '../../App'
+import { Game } from '../../../App'
 import * as S from './styles'
 
 type Props = {
   game: Game
 }
 
-const ProductSlider = ({ game }: Props) => {
+const CardSliderExpo = ({ game }: Props) => {
   return (
     <S.Produto>
       <Link to={`/product-details/${game.id}`} state={{ game }}>
@@ -30,4 +30,4 @@ const ProductSlider = ({ game }: Props) => {
   )
 }
 
-export default ProductSlider
+export default CardSliderExpo
