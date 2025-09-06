@@ -3,10 +3,11 @@ import { useDispatch } from 'react-redux'
 import * as S from './styles'
 import { Game } from '../../../App'
 import { paraReal } from '../../Product'
+import Button from '../../Button'
 import { esvaziar } from '../../../store/reducers/carrinho'
 import CartEmpity from '../../../assets/images/Cart_Empty_Dark.svg'
-import MoonLoader from '../../Loader'
-import Button from '../../Button'
+import { MoonLoader } from 'react-spinners'
+import { motion, AnimatePresence } from 'framer-motion' // 👈 animação
 
 export type Props = {
   sidebarOpen: boolean
@@ -27,7 +28,7 @@ type CheckoutSidebarProps = {
 const CheckoutSidebar = ({ onBack }: CheckoutSidebarProps) => {
   return (
     <S.SidebarContent>
-      <h2>Checkout</h2>
+      <h1>Checkout</h1>
       <p>Escolha o método de pagamento:</p>
 
       <div className="metodo">
@@ -58,6 +59,16 @@ export const SideBarCart = ({
 
   // 👉 Estado que controla o "step"
   const [step, setStep] = useState<'cart' | 'checkout'>('cart')
+
+  // 👉 sempre que abrir a sidebar, resetar step para "cart"
+  useEffect(() => {
+    if (sidebarOpen) {
+      setStep('cart')
+    }
+  }, [sidebarOpen])
+
+  // 👉 Loading entre steps
+  const [loading, setLoading] = useState(false)
 
   const isEmpty = rows.filter((row) => row.type === 'item').length === 0
 
@@ -100,103 +111,131 @@ export const SideBarCart = ({
     }
   }
 
+  // 👉 Função para trocar step com loading
+  const goToCheckout = () => {
+    setLoading(true)
+    setTimeout(() => {
+      setLoading(false)
+      setStep('checkout')
+    }, 1300) // 1.2s de loading fake
+  }
+
+  const goBackToCart = () => {
+    setLoading(true)
+    setTimeout(() => {
+      setLoading(false)
+      setStep('cart')
+    }, 700) // um pouco mais rápido na volta
+  }
+
   return (
     <S.Sidebar ref={sidebarRef} open={sidebarOpen} scrollable={isScrollable}>
-      {/* --- Troca de conteúdo pelo step --- */}
-      {step === 'cart' ? (
-        <>
-          <S.HeaderCart>
-            <h1>{isEmpty ? 'Seu Carrinho' : 'Continuar Compra'}</h1>
-            <div onClick={() => setSidebarOpen(false)}>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="16"
-                fill="currentColor"
-                viewBox="0 0 16 16"
-              >
-                <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z" />
-              </svg>
-            </div>
-          </S.HeaderCart>
-
-          {isEmpty ? (
-            <S.ContainerVoidCart>
-              <span>O carrinho está vazio.</span>
-              <br />
-              <div className="centralizadorVertical">
-                <img src={CartEmpity} alt="Cart Empity Icon" />
-                <a
-                  onClick={() => setSidebarOpen(false)}
-                  title="fechar e continuar comprando"
-                >
-                  Continuar comprando
-                </a>
-              </div>
-            </S.ContainerVoidCart>
-          ) : (
-            <S.SidebarContent>
-              <div>
-                <div className="prices">
-                  <strong>SubTotal</strong>
-                  <strong>{paraReal(subtotal)}</strong>
-                </div>
-                <div className="prices">
-                  <strong>
-                    Total ({itemCount} {itemCount === 1 ? 'item' : 'itens'})
-                  </strong>
-                  <strong>{paraReal(valorTotal)}</strong>
-                </div>
-              </div>
-
-              <div className="codigoCupom">
-                <label htmlFor="codigoCupom">Resgatar código:</label>
-                <input
-                  type="text"
-                  id="codigoCupom"
-                  placeholder="Inserir o código de desconto"
-                />
-              </div>
-
-              {rows.filter((row) => row.type === 'item').length > 0 && (
-                <div className="btnMetodoPag">
-                  <span>Método de pagamento:</span>
-                  <S.BtnPagamento type="button" onClick={() => setStep('checkout')}>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="8"
-                      height="8"
-                      fill="currentColor"
-                      viewBox="0 0 16 16"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2"
-                      />
-                    </svg>
-                    <span>Adicionar método de pagamento</span>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      strokeWidth="1.5"
-                      stroke="currentColor"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="m8.25 4.5 7.5 7.5-7.5 7.5"
-                      />
-                    </svg>
-                  </S.BtnPagamento>
-                </div>
-              )}
-            </S.SidebarContent>
-          )}
-        </>
+      {/* --- Loading --- */}
+      {loading ? (
+        <S.LoaderWrapper>
+          <MoonLoader size={80} color="#36d7b7" />
+        </S.LoaderWrapper>
       ) : (
-        // 👉 Novo "passo" (CheckoutSidebar)
-        <CheckoutSidebar onBack={() => setStep('cart')} />
+        // --- Animação entre steps ---
+        <AnimatePresence mode="wait">
+          {step === 'cart' ? (
+            <motion.div
+              key="cart"
+              initial={{ opacity: 0, x: -100 }} // Começa 100px à esquerda, invisível
+              animate={{ opacity: 1, x: 0 }} // Desliza para a posição original, ficando visível
+              exit={{ opacity: 0, x: 100 }} // Desliza para 100px à direita, desaparecendo
+              transition={{ duration: 0.5 }} // Aumenta a duração para um slide mais suave
+            >
+              <S.HeaderCart>
+                <h1>{isEmpty ? 'Seu Carrinho' : 'Continuar Compra'}</h1>
+                <div onClick={() => setSidebarOpen(false)}>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    fill="currentColor"
+                    viewBox="0 0 16 16"
+                  >
+                    <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z" />
+                  </svg>
+                </div>
+              </S.HeaderCart>
+
+              {isEmpty ? (
+                <S.ContainerVoidCart>
+                  <span>O carrinho está vazio.</span>
+                  <br />
+                  <div className="centralizadorVertical">
+                    <img src={CartEmpity} alt="Cart Empity Icon" />
+                    <a
+                      onClick={() => setSidebarOpen(false)}
+                      title="fechar e continuar comprando"
+                    >
+                      Continuar comprando
+                    </a>
+                  </div>
+                </S.ContainerVoidCart>
+              ) : (
+                <S.SidebarContent>
+                  <div>
+                    <div className="prices">
+                      <strong>SubTotal</strong>
+                      <strong>{paraReal(subtotal)}</strong>
+                    </div>
+                    <div className="prices">
+                      <strong>
+                        Total ({itemCount} {itemCount === 1 ? 'item' : 'itens'})
+                      </strong>
+                      <strong>{paraReal(valorTotal)}</strong>
+                    </div>
+                  </div>
+
+                  <div className="codigoCupom">
+                    <label htmlFor="codigoCupom">Resgatar código:</label>
+                    <input
+                      type="text"
+                      id="codigoCupom"
+                      placeholder="Inserir o código de desconto"
+                    />
+                  </div>
+
+                  {rows.filter((row) => row.type === 'item').length > 0 && (
+                    <div className="btnMetodoPag">
+                      <span>Método de pagamento:</span>
+                      <S.BtnPagamento type="button" onClick={goToCheckout}>
+                        <span>Adicionar método de pagamento</span>
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          width="12"
+                          height="12"
+                          stroke-width="1.5"
+                          stroke="currentColor"
+                        >
+                          <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="m8.25 4.5 7.5 7.5-7.5 7.5"
+                          />
+                        </svg>
+                      </S.BtnPagamento>
+                    </div>
+                  )}
+                </S.SidebarContent>
+              )}
+            </motion.div>
+          ) : (
+            <motion.div
+              key="cart"
+              initial={{ opacity: 0, x: 100 }} // Começa 100px à esquerda, invisível
+              animate={{ opacity: 1, x: 0 }} // Desliza para a posição original, ficando visível
+              exit={{ opacity: 0, x: -100 }} // Desliza para 100px à direita, desaparecendo
+              transition={{ duration: 0.3 }} // Aumenta a duração para um slide mais suave
+            >
+              <CheckoutSidebar onBack={goBackToCart} />
+            </motion.div>
+          )}
+        </AnimatePresence>
       )}
     </S.Sidebar>
   )

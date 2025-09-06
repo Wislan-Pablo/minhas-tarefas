@@ -13,13 +13,15 @@ export const ButtonContainer = styled.button`
   text-decoration: none;
 `
 
-export const ButtonLink = styled(Link)`
+export const ButtonLink = styled.button`
   border: 2px solid ${Cores.branco};
   color: ${Cores.branco};
   background: transparent;
   font-size: 16px;
   font-weight: bold;
   padding: 8px 16px;
+  margin-right: 16px;
+  margin-bottom: 16px;
   border-radius: 8px;
   transition: background-position 0.3s ease-in-out; /* Transição suave */
 
@@ -31,6 +33,10 @@ export const ButtonLink = styled(Link)`
     border: none; /* Remove a borda */
     cursor: pointer;
     padding: 10px 18px; /* Mantém o mesmo tamanho */
+  }
+
+  a {
+    color: ${Cores.branco};
   }
 `
 

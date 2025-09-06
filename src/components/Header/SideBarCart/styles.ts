@@ -76,6 +76,12 @@ export const BtnEsvaziarCesta = styled.div`
 export const SidebarContent = styled.div`
   padding: 0;
 
+  h1 {
+    font-size: 24px;
+    margin-right: 8px;
+    margin-bottom: 24px;
+  }
+
   h2 {
     font-size: 20px;
     margin-right: 8px;
@@ -84,6 +90,7 @@ export const SidebarContent = styled.div`
 
   p {
     text-align: left;
+    margin-bottom: 16px;
   }
 
   ul {
@@ -147,13 +154,13 @@ export const SidebarContent = styled.div`
 `
 
 export const BtnPagamento = styled.button`
-    width: 100%;
-    display: flex;
-    padding: 12px;
-    align-items: center;
-    justify-content: space-between;
-    margin-top: 16px;
-      border: 2px solid ${Cores.branco};
+  width: 100%;
+  display: flex;
+  padding: 12px;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 16px;
+  border: 2px solid ${Cores.branco};
   color: ${Cores.branco};
   background: transparent;
   font-size: 16px;
@@ -162,23 +169,31 @@ export const BtnPagamento = styled.button`
   border-radius: 8px;
   transition: background-position 0.3s ease-in-out; /* Transição suave */
 
-    &:hover {
-      background-image: linear-gradient(-45deg, ${Cores.verde}, ${Cores.azul});
-      background-size: 200%; /* Define o tamanho do gradiente */
-      background-position: right center; /* Move o gradiente */
-      color: ${Cores.branco}; /* Mantém a cor do texto */
-      border: none; /* Remove a borda */
-      cursor: pointer;
-      padding: 10px 18px; /* Mantém o mesmo tamanho */
-      transform: scale(1.03);
-    }
-
-
-    svg {
-      width: 24px;
-      height: 24px;
-    }
+  &:hover {
+    background-image: linear-gradient(-45deg, ${Cores.verde}, ${Cores.azul});
+    background-size: 200%; /* Define o tamanho do gradiente */
+    background-position: right center; /* Move o gradiente */
+    color: ${Cores.branco}; /* Mantém a cor do texto */
+    border: none; /* Remove a borda */
+    cursor: pointer;
+    padding: 10px 18px; /* Mantém o mesmo tamanho */
+    transform: scale(1.03);
   }
+
+  svg {
+    display: block;
+    width: 24px;
+    height: 24px;
+    view-box: auto;
+  }
+}
+`
+
+export const LoaderWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
 `
 
 export const Wireframe = styled.div`
