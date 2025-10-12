@@ -6,6 +6,7 @@ class Game {
   preco: number
   categoria: string
   imagem: string
+  capa: string
 
   constructor(
     id: number,
@@ -14,7 +15,8 @@ class Game {
     precoAntigo: number,
     preco: number,
     categoria: string,
-    imagem: string
+    imagem: string,
+    capa: string
   ) {
     this.id = id
     this.titulo = titulo
@@ -23,6 +25,7 @@ class Game {
     this.preco = preco
     this.categoria = categoria
     this.imagem = imagem
+    this.capa = capa
   }
 }
 

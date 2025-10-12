@@ -15,6 +15,7 @@ export type Game = {
   preco: number
   categoria: string
   imagem: string
+  capa: string
 }
 
 function App() {

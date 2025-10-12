@@ -15,7 +15,7 @@ const Hero = ({ game }: Props) => {
   return (
     <>
       <div className="containerBanner">
-        <Banner style={{ backgroundImage: `url(${game.imagem})` }}>
+        <Banner style={{ backgroundImage: `url(${game.capa})` }}>
           <div className="container">
             <div>
               <Tag>RPG</Tag>

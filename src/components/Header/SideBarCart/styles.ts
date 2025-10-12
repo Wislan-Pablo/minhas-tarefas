@@ -1,6 +1,5 @@
 import styled, { keyframes } from 'styled-components'
 import { Cores } from '../../../styles'
-import { ButtonLink } from '../../Button/styles'
 
 export const Sidebar = styled.div<{ open: boolean; scrollable: boolean }>`
   position: fixed;

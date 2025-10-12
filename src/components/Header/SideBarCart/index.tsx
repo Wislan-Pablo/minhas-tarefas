@@ -39,6 +39,20 @@ const CheckoutSidebar = ({ onBack }: CheckoutSidebarProps) => {
 
       <div style={{ marginTop: '1rem' }}>
         <Button type="button" onClick={onBack}>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            width="12"
+            height="12"
+            stroke-width="1.5"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M15.75 19.5 8.25 12l7.5-7.5"
+            />
+          </svg>
           Voltar para o carrinho
         </Button>
       </div>

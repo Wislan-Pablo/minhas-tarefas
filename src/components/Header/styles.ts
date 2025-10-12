@@ -290,7 +290,7 @@ export const SidebarOverlay = styled.div<{ open: boolean }>`
   height: 100vh;
   top: 0;
   left: 0;
-  background: rgba(0, 0, 0, 0.95);
+  background: rgba(50, 50, 50, 0.99);
   opacity: ${({ open }) => (open ? 1 : 0)};
   visibility: ${({ open }) => (open ? 'visible' : 'hidden')};
   transition: opacity 0.3s ease, visibility 0.3s ease;

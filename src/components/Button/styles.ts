@@ -15,6 +15,10 @@ export const ButtonContainer = styled.button`
 
 export const ButtonLink = styled.button`
   border: 2px solid ${Cores.branco};
+  display: flex;
+  align-items: center;
+  width: fit-content;
+  justify-content: space-between;
   color: ${Cores.branco};
   background: transparent;
   font-size: 16px;
@@ -33,6 +37,12 @@ export const ButtonLink = styled.button`
     border: none; /* Remove a borda */
     cursor: pointer;
     padding: 10px 18px; /* Mantém o mesmo tamanho */
+  }
+
+  svg {
+    width: 24px;
+    height: 24px;
+    view-box: auto;
   }
 
   a {

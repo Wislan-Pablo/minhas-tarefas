@@ -7,7 +7,8 @@
       "precoAntigo": 299,
       "preco": 190,
       "categoria": "Esportes",
-      "imagem": "https://image.api.playstation.com/vulcan/ap/rnd/202301/0312/yM0eeJui8AFByeP5BC5XV5j9.png?w=440&thumb=false"
+      "imagem": "https://image.api.playstation.com/vulcan/ap/rnd/202301/0312/yM0eeJui8AFByeP5BC5XV5j9.png?w=440&thumb=false",
+      "capa": "/assets/images/fundo_fifa_2023.png"
     },
     {
       "id": 2,
@@ -34,7 +35,8 @@
       "precoAntigo": null,
       "preco": 349.9,
       "categoria": "Aventura",
-      "imagem": "https://image.api.playstation.com/vulcan/ap/rnd/202011/0919/JmxLZt6exeqcKRz7BSmK8aId.png?w=440&thumb=false"
+      "imagem": "https://image.api.playstation.com/vulcan/ap/rnd/202011/0919/JmxLZt6exeqcKRz7BSmK8aId.png?w=440&thumb=false",
+      "capa": "/assets/images/fundo_hogwarts.png"
     }
   ],
   "lancamentos": [
