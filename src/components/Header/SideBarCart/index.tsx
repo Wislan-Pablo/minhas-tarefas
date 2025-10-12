@@ -8,6 +8,7 @@ import { esvaziar } from '../../../store/reducers/carrinho'
 import CartEmpity from '../../../assets/images/Cart_Empty_Dark.svg'
 import { MoonLoader } from 'react-spinners'
 import { motion, AnimatePresence } from 'framer-motion' // 👈 animação
+import { useGetCuponsQuery, Cupom } from '../../../Services/api'
 
 export type Props = {
   sidebarOpen: boolean
@@ -84,6 +85,15 @@ export const SideBarCart = ({
   // 👉 Loading entre steps
   const [loading, setLoading] = useState(false)
 
+  // 👉 Estados para cupom de desconto
+  const [codigoCupom, setCodigoCupom] = useState('')
+  const [cupomAplicado, setCupomAplicado] = useState<Cupom | null>(null)
+  const [erroCupom, setErroCupom] = useState('')
+  const [loadingCupom, setLoadingCupom] = useState(false)
+
+  // 👉 Buscar cupons disponíveis
+  const { data: cupons = [] } = useGetCuponsQuery()
+
   const isEmpty = rows.filter((row) => row.type === 'item').length === 0
 
   // Subtotal calculado a partir dos itens
@@ -100,6 +110,18 @@ export const SideBarCart = ({
   const itemCount = useMemo(() => {
     return rows.filter((row) => row.type === 'item').length
   }, [rows])
+
+  // 👉 Cálculo do desconto e valor final
+  const valorDesconto = useMemo(() => {
+    if (cupomAplicado) {
+      return (subtotal * cupomAplicado.desconto) / 100
+    }
+    return 0
+  }, [subtotal, cupomAplicado])
+
+  const valorFinal = useMemo(() => {
+    return subtotal - valorDesconto
+  }, [subtotal, valorDesconto])
 
   useEffect(() => {
     const checkOverflow = () => {
@@ -122,7 +144,44 @@ export const SideBarCart = ({
 
     if (confirmar) {
       dispatch(esvaziar())
+      setCupomAplicado(null)
+      setCodigoCupom('')
+      setErroCupom('')
     }
+  }
+
+  // 👉 Função para validar e aplicar cupom
+  const handleAplicarCupom = async () => {
+    if (!codigoCupom.trim()) {
+      setErroCupom('Digite um código de cupom')
+      return
+    }
+
+    setLoadingCupom(true)
+    setErroCupom('')
+
+    // Simular delay de validação
+    setTimeout(() => {
+      const cupomEncontrado = cupons.find(
+        (cupom) => cupom.codigo.toUpperCase() === codigoCupom.toUpperCase() && cupom.ativo
+      )
+
+      if (cupomEncontrado) {
+        setCupomAplicado(cupomEncontrado)
+        setErroCupom('')
+      } else {
+        setErroCupom('Cupom inválido ou inativo')
+        setCupomAplicado(null)
+      }
+      setLoadingCupom(false)
+    }, 1000)
+  }
+
+  // 👉 Função para remover cupom
+  const handleRemoverCupom = () => {
+    setCupomAplicado(null)
+    setCodigoCupom('')
+    setErroCupom('')
   }
 
   // 👉 Função para trocar step com loading
@@ -196,21 +255,88 @@ export const SideBarCart = ({
                       <strong>SubTotal</strong>
                       <strong>{paraReal(subtotal)}</strong>
                     </div>
+                    
+                    {cupomAplicado && (
+                      <div className="prices" style={{ color: '#4CAF50' }}>
+                        <strong>Desconto ({cupomAplicado.desconto}%)</strong>
+                        <strong>-{paraReal(valorDesconto)}</strong>
+                      </div>
+                    )}
+                    
                     <div className="prices">
                       <strong>
                         Total ({itemCount} {itemCount === 1 ? 'item' : 'itens'})
                       </strong>
-                      <strong>{paraReal(valorTotal)}</strong>
+                      <strong>{paraReal(valorFinal)}</strong>
                     </div>
                   </div>
 
                   <div className="codigoCupom">
                     <label htmlFor="codigoCupom">Resgatar código:</label>
-                    <input
-                      type="text"
-                      id="codigoCupom"
-                      placeholder="Inserir o código de desconto"
-                    />
+                    <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+                      <input
+                        type="text"
+                        id="codigoCupom"
+                        placeholder="Inserir o código de desconto"
+                        value={codigoCupom}
+                        onChange={(e) => setCodigoCupom(e.target.value)}
+                        disabled={loadingCupom || !!cupomAplicado}
+                        style={{ flex: 1 }}
+                      />
+                      {cupomAplicado ? (
+                        <button 
+                          type="button" 
+                          onClick={handleRemoverCupom}
+                          style={{ 
+                            backgroundColor: '#f44336', 
+                            padding: '8px 12px',
+                            fontSize: '12px',
+                            color: 'white',
+                            border: 'none',
+                            borderRadius: '4px'
+                          }}
+                        >
+                          Remover
+                        </button>
+                      ) : (
+                        <button 
+                          type="button" 
+                          onClick={loadingCupom || !codigoCupom.trim() ? undefined : handleAplicarCupom}
+                          style={{ 
+                            padding: '8px 12px',
+                            fontSize: '12px',
+                            opacity: loadingCupom || !codigoCupom.trim() ? 0.6 : 1,
+                            cursor: loadingCupom || !codigoCupom.trim() ? 'not-allowed' : 'pointer',
+                            backgroundColor: '#007bff',
+                            color: 'white',
+                            border: 'none',
+                            borderRadius: '4px'
+                          }}
+                        >
+                          {loadingCupom ? 'Validando...' : 'Aplicar'}
+                        </button>
+                      )}
+                    </div>
+                    
+                    {erroCupom && (
+                      <div style={{ 
+                        color: '#f44336', 
+                        fontSize: '12px', 
+                        marginTop: '4px' 
+                      }}>
+                        {erroCupom}
+                      </div>
+                    )}
+                    
+                    {cupomAplicado && (
+                      <div style={{ 
+                        color: '#4CAF50', 
+                        fontSize: '12px', 
+                        marginTop: '4px' 
+                      }}>
+                        ✓ Cupom "{cupomAplicado.codigo}" aplicado com sucesso!
+                      </div>
+                    )}
                   </div>
 
                   {rows.filter((row) => row.type === 'item').length > 0 && (

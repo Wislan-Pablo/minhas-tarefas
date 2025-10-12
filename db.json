@@ -121,5 +121,31 @@
       "categoria": "Ação",
       "imagem": "/assets/images/resident.png"
     }
+  ],
+  "cupons": [
+    {
+      "id": 1,
+      "codigo": "DESCONTO10",
+      "desconto": 10,
+      "ativo": true
+    },
+    {
+      "id": 2,
+      "codigo": "PROMO20",
+      "desconto": 20,
+      "ativo": true
+    },
+    {
+      "id": 3,
+      "codigo": "BLACKFRIDAY",
+      "desconto": 30,
+      "ativo": true
+    },
+    {
+      "id": 4,
+      "codigo": "PRIMEIROCOMPRA",
+      "desconto": 15,
+      "ativo": true
+    }
   ]
 }

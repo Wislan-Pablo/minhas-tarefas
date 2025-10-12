@@ -9,10 +9,10 @@ type Props = {
   children?: React.ReactNode
 }
 
-const Button = ({ type, children, title, onClick }: Props) => {
+const Button = ({ type, children, title, onClick}: Props) => {
   if (type === 'button') {
     return (
-      <ButtonLink type="button" title={title} onClick={onClick}>
+      <ButtonLink type="button" title={title} onClick={onClick} >
         {children}
       </ButtonLink>
     )
