@@ -20,7 +20,7 @@ import {
   ContainerSearch
 } from './styles'
 import logo from '../../assets/images/logo2.svg'
-import { RootReducer } from '../../store'
+import { RootState } from '../../store'
 import { SideBarCart } from './SideBarCart'
 
 // importa as actions do novo reducer sidebar
@@ -43,11 +43,11 @@ const Header = () => {
   const handleMouseEnter = () => setShowCategories(true)
   const handleMouseLeave = () => setShowCategories(false)
 
-  const itens = useSelector((state: RootReducer) => state.carrinho.itens)
+  const itens = useSelector((state: RootState) => state.carrinho.itens)
   const valorTotal = itens.reduce((acc: any, item: { preco: any }) => acc + item.preco, 0)
 
   // pega o estado global da sidebar
-  const sidebarOpen = useSelector((state: RootReducer) => state.sidebar.open)
+  const sidebarOpen = useSelector((state: RootState) => state.sidebar.open)
 
   const [searchVisible, setSearchVisible] = useState(false)
   const searchRef = useRef<HTMLDivElement | null>(null)

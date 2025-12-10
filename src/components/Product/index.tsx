@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 
-import { RootReducer } from '../../store'
+import { RootState } from '../../store'
 import { Game } from '../../App'
 import * as S from './styles'
 import { abrirSidebar, fecharSidebar } from '../../store/reducers/sidebar'

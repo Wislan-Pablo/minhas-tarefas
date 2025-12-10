@@ -1,5 +1,5 @@
 // store/reducers/sidebar.ts
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 type SidebarState = {
   open: boolean
@@ -16,6 +16,9 @@ const sidebarSlice = createSlice({
     },
     fecharSidebar: (state) => {
       state.open = false
+    },
+    REHYDRATE: (state, action: PayloadAction<SidebarState>) => {
+      return action.payload
     }
   }
 })

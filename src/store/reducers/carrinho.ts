@@ -28,6 +28,9 @@ const carrinhoSlice = createSlice({
     },
     esvaziar: (state) => {
       state.itens = []
+    },
+    REHYDRATE: (state, action: PayloadAction<CarrinhoState>) => {
+      return action.payload
     }
   }
 })
